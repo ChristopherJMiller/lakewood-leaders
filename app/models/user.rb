@@ -8,7 +8,7 @@
 # [verified] Boolean that contains if the user has been verified by email.
 # [verify_token] String that contains the verification token that is send by email to verify the user
 #
-# ==Attributes
+# == Attributes
 # * Adds a token before creation.
 # * Must have a secure password (At least 8 characters long and be present)
 # * Name must be present
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   validates :email, email_format: { check_mx: true }
   validates :email, uniqueness: true
-  validates :password, length: { minimum: 8 }
+  validates :password, length: { minimum: 8 }, on: :create
   validates :verified, inclusion: [true, false]
 
   # Used to render a user as json with the password_digest excluded.
