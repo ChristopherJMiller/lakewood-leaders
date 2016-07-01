@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   get '/verify_email/:token', to: 'users#verify_email'
 
   resource :sessions, only: [:create, :destroy]
+  resource :tokens, only: [:create]
 
 end
