@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'pages#home'
+
   resources :users, only: [:show, :new, :create, :edit, :update] do
     put '/change_password', to: 'users#change_password'
   end
@@ -8,4 +10,6 @@ Rails.application.routes.draw do
   resource :sessions, only: [:create, :destroy]
   resource :tokens, only: [:create]
 
+  get 'log_in', to: 'sessions#new'
+  get 'register', to: 'users#new'
 end
