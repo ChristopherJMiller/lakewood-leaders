@@ -15,3 +15,48 @@
 
 @import "bootstrap";
 @import "font-awesome";
+
+.dropdown-width {
+  width: 300px;
+  top: 120%;
+}
+
+.dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 9px;
+  display: inline-block;
+  border-right: 11px solid transparent;
+  border-bottom: 11px solid #ccc;
+  border-left: 11px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  display: inline-block;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #ffffff;
+  border-left: 10px solid transparent;
+  content: '';
+}
+
+nav.nav-margin-bottom {
+  margin-bottom: 1rem;
+}
+
+div.main-div {
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+/* Medium devices (desktops, 992px and up) @screen-md-min*/
+@media (min-width: 992px) {
+  div.main-div {
+    margin-left: 16.6666667%;
+    margin-right: 16.6666667%;
+  }
+}
