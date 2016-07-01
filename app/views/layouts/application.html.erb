@@ -30,11 +30,11 @@
       <div class='hidden-md-up'>
         <% if logged_in then %>
           <li class='nav-item'>
-            <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', id: 'navbar-logout' %>
+            <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', id: 'navbar_logout' %>
           </li>
         <% else %>
           <li class='nav-item'>
-            <%= link_to log_in_path, class: 'nav-link' do %>
+            <%= link_to log_in_path, class: 'nav-link', id: 'navbar_login' do %>
               <i class="fa fa-sign-in"></i> Log In
             <% end %>
           </li>
