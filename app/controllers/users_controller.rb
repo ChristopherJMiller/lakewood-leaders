@@ -2,14 +2,14 @@ class UsersController < ApplicationController
   respond_to :html, :json
 
   def show
-    user = User.find_by_id(params[:id])
-    if !user
+    @user = User.find_by_id(params[:id])
+    if !@user
       head status: :not_found and return
     end
-    if user.id != session[:user_id] or session[:user_id].nil?
+    if @user.id != session[:user_id] or session[:user_id].nil?
       head status: :forbidden and return
     end
-    render json: user.as_json.merge({members: user.members})
+    respond_with @user
   end
 
   def new
