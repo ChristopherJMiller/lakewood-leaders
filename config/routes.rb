@@ -5,6 +5,10 @@ Rails.application.routes.draw do
     put '/change_password', to: 'users#change_password'
   end
 
+  resources :events do
+    resources :participants, only: [:index, :create, :destroy]
+  end
+
   get '/verify_email/:token', to: 'users#verify_email'
 
   resource :sessions, only: [:create, :destroy]

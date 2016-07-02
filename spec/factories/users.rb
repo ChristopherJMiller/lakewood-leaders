@@ -7,5 +7,7 @@ FactoryGirl.define do
 
     verified true
     verify_token ''
+
+    rank 1
   end
 end

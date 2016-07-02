@@ -1,0 +1,206 @@
+require 'rails_helper'
+
+RSpec.describe EventsController, type: :controller do
+  let(:valid_parameters) do
+    {name: 'Test Event', description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29', end_time: '2016-07-02 23:57:29'}
+  end
+
+  let(:invalid_parameters) do
+    {name: nil, description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29', end_time: '2016-07-02 23:57:29'}
+  end
+
+  let(:event) do
+    FactoryGirl.create(:event)
+  end
+
+  let(:user) do
+    FactoryGirl.create(:user)
+  end
+
+  let(:invalid_session) do
+    {user_id: -1}
+  end
+
+  let(:valid_session) do
+    {user_id: user.id}
+  end
+
+  describe 'GET #index' do
+    it 'assigns all events as @events' do
+      event = FactoryGirl.create(:event)
+      get :index
+      expect(assigns(:events)).to eq([event])
+    end
+  end
+
+  describe 'GET #show' do
+    context 'with a valid event' do
+      before(:each) do
+        get :show, {id: event.id}
+      end
+
+      it 'returns HTTP status 200 (OK)' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'assigns the requested event as @event' do
+        expect(assigns(:event)).to eq(event)
+      end
+    end
+
+    context 'with an invalid event' do
+      it 'returns HTTP status 404 (Not Found)' do
+        expect {
+          get :show, {id: -1}
+        }.to raise_error(ActionController::RoutingError)
+      end
+    end
+  end
+
+  describe 'GET #new' do
+    it 'assigns a new event as @tevenevent' do
+      get :new
+      expect(assigns(:event)).to be_a_new(Event)
+    end
+  end
+
+  describe 'GET #edit' do
+    context 'with a valid event' do
+      before(:each) do
+        get :edit, {id: event.id}
+      end
+
+      it 'returns HTTP status 200 (OK)' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'assigns the requested event as @event' do
+        expect(assigns(:event)).to eq(event)
+      end
+    end
+
+    context 'with an invalid event' do
+      it 'returns HTTP status 404 (Not Found)' do
+        expect {
+          get :edit, {id: -1}
+        }.to raise_error(ActionController::RoutingError)
+      end
+    end
+  end
+
+  describe 'POST #create' do
+    context 'while logged in' do
+      context 'with valid parameters' do
+        it 'returns HTTP status 201 (Created)' do
+          post :create, {event: valid_parameters}, valid_session
+          expect(response).to have_http_status(:created)
+        end
+
+        it 'creates a new event' do
+          expect {
+            post :create, {event: valid_parameters}, valid_session
+          }.to change(Event, :count).by(1)
+        end
+      end
+
+      context 'with invalid parameters' do
+        it 'returns HTTP status 400 (Bad Request)' do
+          post :create, {event: invalid_parameters}, valid_session
+          expect(response).to have_http_status(:bad_request)
+        end
+      end
+    end
+
+    context 'while logged out' do
+      it 'returns HTTP status 403 (Forbidden)' do
+        post :create, {event: valid_parameters}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  describe 'PUT #update' do
+    context 'with a valid event' do
+      context 'as an admin' do
+        before(:each) do
+          Participant.create(event_id: event.id, user_id: user.id)
+        end
+
+        context 'with valid parameters' do
+          before(:each) do
+            put :update, {id: event.id, event: valid_parameters}, valid_session
+          end
+
+          it 'returns HTTP status 200 (OK)' do
+            expect(response).to have_http_status(:ok)
+          end
+
+          it 'updates the requested event' do
+            event.reload
+            expect(event.name).to eq(valid_parameters[:name])
+            expect(event.description).to eq(valid_parameters[:description])
+            expect(event.location).to eq(valid_parameters[:location])
+            expect(event.start_time).to eq(valid_parameters[:start_time])
+            expect(event.end_time).to eq(valid_parameters[:end_time])
+          end
+        end
+
+        context 'with invalid parameters' do
+          it 'returns HTTP status 400 (Bad Request)' do
+            put :update, {id: event.id, event: invalid_parameters}, valid_session
+            expect(response).to have_http_status(:bad_request)
+          end
+        end
+      end
+
+      context 'not as an admin' do
+        it 'returns HTTP status 403 (Forbidden)' do
+          put :update, {id: event.id, event: valid_parameters}, valid_session
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+
+    context 'with an invalid event' do
+      it 'returns HTTP status 404 (Not Found)' do
+        put :update, {id: -1, event: valid_parameters}, valid_session
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    context 'with a valid event' do
+      context 'as an admin' do
+        before(:each) do
+          Participant.create(event_id: event.id, user_id: user.id)
+        end
+
+        it 'returns HTTP status 200 (OK)' do
+          delete :destroy, {id: event.id}, valid_session
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'deletes the requested event' do
+          expect {
+            delete :destroy, {id: event.id}, valid_session
+          }.to change(Event, :count).by(-1)
+        end
+      end
+
+      context 'not as an admin' do
+        it 'returns HTTP status 403 (Forbidden)' do
+          put :destroy, {id: event.id}, valid_session
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+
+    context 'with an invalid event' do
+      it 'returns HTTP status 404 (Not Found)' do
+        delete :destroy, {id: 1}
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+  end

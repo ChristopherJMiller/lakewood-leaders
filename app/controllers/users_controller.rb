@@ -89,6 +89,7 @@ class UsersController < ApplicationController
   def user_parameters_create
     parameters = params.require(:user).permit(:name, :email, :password, :password_confirmation)
     parameters[:verified] = false
+    parameters[:rank] = 0
     return parameters
   end
 

@@ -27,4 +27,7 @@ class Event < ActiveRecord::Base
   validates :start_time, presence: true
 
   validates :end_time, presence: true
+
+  has_many :participants
+  has_many :users, through: :participants
 end

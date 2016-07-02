@@ -7,7 +7,11 @@
 # [password_digest] Pair of strings that contains the user's password.
 # [verified] Boolean that contains if the user has been verified by email.
 # [verify_token] String that contains the verification token that is send by email to verify the user
-#
+# [rank] Integer that defines the user's site rank
+# === Ranks
+# [0] Member
+# [1] Officer
+# [2] Advisor
 # == Attributes
 # * Adds a token before creation.
 # * Must have a secure password (At least 8 characters long and be present)
@@ -26,10 +30,17 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 8 }, on: :create
   validates :verified, inclusion: [true, false]
 
-  # Used to render a user as json with the password_digest excluded.
+  validates :rank, presence: true
+
+  # Renders a user as json with the password_digest excluded.
   def as_json(options={})
     options[:except] ||= [:password_digest]
     super(options)
+  end
+
+  # Returns if the user is an admin or not.
+  def is_admin
+    rank > 0
   end
 
   private
