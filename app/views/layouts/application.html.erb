@@ -13,7 +13,13 @@
     <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">&#9776;</button>
     <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar">
       <a class="navbar-brand" href="/">TeamMate</a>
+      <a class="navbar-brand" href="/">Lakewood Leaders</a>
       <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <%= link_to events_path, class: 'nav-link' do %>
+            <i class="fa fa-calendar" aria-hidden="true"></i> Events
+          <% end %>
+        </li>
         <div class="btn-group pull-xs-right">
           <div class='hidden-sm-down'>
         <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
