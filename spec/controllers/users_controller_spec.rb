@@ -42,6 +42,14 @@ RSpec.describe UsersController, type: :controller do
     {user_id: -1}
   end
 
+  describe 'GET #index' do
+    it 'assigns all users as @users' do
+      user = FactoryGirl.create(:user)
+      get :index
+      expect(assigns(:users)).to eq([user])
+    end
+  end
+
   describe 'GET #new' do
     it 'assigns a new user as @user' do
       get :new
