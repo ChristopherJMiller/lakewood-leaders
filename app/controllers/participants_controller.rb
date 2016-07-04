@@ -10,6 +10,9 @@ class ParticipantsController < ApplicationController
     if session[:user_id].nil? or params[:participant][:user_id] != session[:user_id].to_s
       head status: :forbidden and return
     end
+    if !User.find_by_id(session[:user_id]).is_member
+      head status: :forbidden and return
+    end
     if Participant.find_by_event_id_and_user_id(params[:event_id], params[:participant][:user_id])
       head status: :conflict and return
     end
@@ -26,7 +29,7 @@ class ParticipantsController < ApplicationController
     if !participant
       head status: :not_found and return
     end
-    if session[:user_id].nil? or Participant.find_by_event_id_and_user_id(params[:event_id], session[:user_id]).nil? or !Participant.find_by_event_id_and_user_id(params[:event_id], session[:user_id]).user.is_admin
+    if session[:user_id].nil? or (Participant.find_by_event_id_and_user_id(params[:event_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin) or (!User.find_by_id(session[:user_id]).is_admin and !Participant.find_by_event_id_and_user_id(params[:event_id], session[:user_id]).user.is_member)
       head status: :forbidden and return
     end
     participant.destroy

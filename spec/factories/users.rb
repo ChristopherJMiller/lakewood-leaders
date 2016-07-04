@@ -8,6 +8,6 @@ FactoryGirl.define do
     verified true
     verify_token ''
 
-    rank 1
+    rank 0
   end
 end
