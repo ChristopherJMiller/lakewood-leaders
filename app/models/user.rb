@@ -9,9 +9,10 @@
 # [verify_token] String that contains the verification token that is send by email to verify the user
 # [rank] Integer that defines the user's site rank
 # === Ranks
-# [0] Member
-# [1] Officer
-# [2] Advisor
+# [0] Unpaid Member
+# [1] Member
+# [2] Officer
+# [3] Advisor
 # == Attributes
 # * Adds a token before creation.
 # * Must have a secure password (At least 8 characters long and be present)
@@ -38,9 +39,14 @@ class User < ActiveRecord::Base
     super(options)
   end
 
+  # Returns whether the user has paid their fees and thus if they are offically considered a member.
+  def is_member
+    rank > 0
+  end
+
   # Returns if the user is an admin or not.
   def is_admin
-    rank > 0
+    rank > 1
   end
 
   private
