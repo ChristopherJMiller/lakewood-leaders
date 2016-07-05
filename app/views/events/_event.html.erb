@@ -1,7 +1,7 @@
 <tr>
   <td class='event_name'><%= event.name %></td>
   <td class='event_desc'><%= event.location %></td>
-  <td class='event_time'><%= event.start_time %></td>
-  <td class='event_time'><%= event.end_time %></td>
+  <td class='event_time'><%= adjust_time_and_format event.start_time %></td>
+  <td class='event_time'><%= adjust_time_and_format event.end_time %></td>
   <td class='event_view'><%= link_to 'View', event_path(event.id), class: 'btn btn-primary' %></td>
 </tr>

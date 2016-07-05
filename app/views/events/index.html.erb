@@ -2,7 +2,7 @@
   <% if logged_in %>
     <% if User.find_by_id(session[:user_id]).is_admin %>
       <%= link_to new_event_path, class: 'btn btn-info pull-xs-right' do %>
-        <i class="fa fa-plus"></i> Create a New Team
+        <i class="fa fa-plus"></i> Create a New Event
       <% end %>
     <% end %>
   <% end %>
