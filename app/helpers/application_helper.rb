@@ -8,6 +8,11 @@ module ApplicationHelper
   end
 
   def format_time(time)
-    time.to_formatted_s(:long)
+    time.strftime('%b %d, %Y %I:%M %p')
+  end
+
+  def rank_title(rank)
+    titles = ["Non-Member", "Member", "Officer", "Advisor"]
+    titles[rank]
   end
 end
