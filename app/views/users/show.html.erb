@@ -1,0 +1,9 @@
+<div class='main-div'>
+  <h1><%= @user.name %><br><small class='text-muted'><%= rank_title @user.rank %></small></h1>
+  <h3>Joined Events</h3>
+  <table class="table table-striped">
+    <tbody>
+      <%= render partial: 'event', collection: Participant.where(user_id: @user.id), as: :participant or 'This user is not currently in any events.' %>
+    </tbody>
+  </table>
+</div>
