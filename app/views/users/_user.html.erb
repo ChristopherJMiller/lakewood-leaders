@@ -1,0 +1,5 @@
+<tr>
+  <td class='user_name'><%= user.name %></td>
+  <td class='user_rank'><%= rank_title user.rank %></td>
+  <td class='user_view'><%= link_to 'View', user_path(user.id), class: 'btn btn-primary' %></td>
+</tr>
