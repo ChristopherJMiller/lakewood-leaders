@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
   let(:valid_parameters) do
-    {name: 'Test Event', description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29', end_time: '2016-07-02 23:57:29'}
+    {name: 'Test Event', description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29.000000000 -0500', end_time: '2016-07-02 23:57:29.000000000 -0500'}
   end
 
   let(:invalid_parameters) do
