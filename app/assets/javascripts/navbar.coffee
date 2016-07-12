@@ -1,6 +1,9 @@
 redirect = () ->
   window.location.replace window.location.href
 
+String::capitalizeFirstLetter = () ->
+  return this.charAt(0).toUpperCase() + this.slice(1);
+
 $(document).ready ->
   $('#navbar_logout').parent().on 'ajax:success', ->
     setTimeout redirect, 250
@@ -9,11 +12,15 @@ $(document).ready ->
 
   $('#navbar_login').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
-    $(this).children('p').remove()
+    $(this).children('fieldset').children('div').remove()
   $('#navbar_login').on 'ajax:success', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     setTimeout redirect, 1000
-  $('#navbar_login').on 'ajax:error', ->
-    console.log(xhr.responseJSON.error)
-    $(this).children('fieldset').addClass 'form-group has-danger'
-    $(this).find(':submit').before('<p class="text-danger">Email or password is incorrect</p>')
+  $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
+    errors = xhr.responseJSON.error
+    for form of errors
+      fieldSet = $(this).find("##{form}").parent()
+      fieldSet.addClass 'form-group has-danger'
+      for key of errors[form]
+        error = errors[form][key]
+        fieldSet.append("<div><small class=\"text-danger\">#{error}</small></div>")

@@ -11,9 +11,6 @@ class UsersController < ApplicationController
     if !@user
       head status: :not_found and return
     end
-    if @user.id != session[:user_id] or session[:user_id].nil?
-      head status: :forbidden and return
-    end
     respond_with @user
   end
 

@@ -7,7 +7,13 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       head status: :created
     else
-      head status: :bad_request
+      if !user.verified
+        user.errors.add(:email, "This user is not verified, please check your email.")
+      end
+      if !user.authenticate(params[:password]) || !user
+        user.errors.add(:password, "Invalid email and password combination")
+      end
+      render json: {error: user.errors}, status: :bad_request
     end
   end
 
