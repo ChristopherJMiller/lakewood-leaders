@@ -11,6 +11,14 @@ module ApplicationHelper
     time.strftime('%b %d, %Y %I:%M %p')
   end
 
+  def ranks
+    if User.find_by_id(session[:user_id]).rank == 3
+      ["Non-Member", "Member", "Officer", "Advisor"]
+    else
+      ["Non-Member", "Member"]
+    end
+  end
+
   def rank_title(rank)
     titles = ["Non-Member", "Member", "Officer", "Advisor"]
     titles[rank]

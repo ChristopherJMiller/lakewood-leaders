@@ -1,4 +1,12 @@
 <div class="main-div">
+  <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+    <h1>Users who have not paid their fees</h1>
+    <table class="table table-striped">
+      <tbody>
+        <%= render partial: 'user', collection: User.where("rank = ?", 0), as: :user %>
+      </tbody>
+    </table>
+  <% end %>
   <h1>All Members</h1>
   <table class="table table-striped">
     <tbody>

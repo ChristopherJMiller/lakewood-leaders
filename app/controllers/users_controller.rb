@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     if !user
       head status: :not_found and return
     end
-    if (session[:user_id].nil? or user.id != session[:user_id]) and (User.find_by_id(session[:user_id]).nil? or User.find_by_id(session[:user_id]).rank >= 2)
+    if (session[:user_id].nil? or user.id != session[:user_id]) and (User.find_by_id(session[:user_id]).nil? or User.find_by_id(session[:user_id]).rank < 2)
       head status: :forbidden and return
     end
     if user.update(user_parameters_update)
@@ -96,7 +96,7 @@ class UsersController < ApplicationController
   end
 
   def user_parameters_update
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :rank)
   end
 
   def user_parameters_change_password

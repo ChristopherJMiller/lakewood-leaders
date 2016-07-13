@@ -8,6 +8,9 @@ String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
 $(document).ready ->
+  $('[name="user[rank]"]').change ->
+    console.log("Submitting")
+    $(this).parent().submit()
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
