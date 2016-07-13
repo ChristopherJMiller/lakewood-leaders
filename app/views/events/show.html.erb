@@ -4,10 +4,10 @@
   <h5 class='text-muted'>Time: <%= format_time @event.start_time %> - <%= format_time @event.end_time %></h5>
   <p><%= @event.description %></p>
   <% current_user_in_event = !@event.participants.find_by_user_id(current_user).nil? %>
+  <div class="btn-group" role="group">
   <% if !session[:user_id].nil? %>
-    <div class="btn-group" role="group" aria-label="Basic example">
       <%= button_to ((current_user_in_event && 'Signed Up') or 'Sign Up For Event'), {event_id: @event.id, participant: {user_id: current_user.id}, controller: :participants, action: :create}, disabled: current_user_in_event, remote: true, method: :post, class: 'btn btn-secondary btn-lg', id: 'request_join' %>
-      <%= link_to 'View Participants', event_participants_path(@event.id), class: 'btn btn-secondary btn-lg' %>
-    </div>
   <% end %>
+  <%= link_to 'View Participants', event_participants_path(@event.id), class: 'btn btn-secondary btn-lg' %>
+</div>
 </div>
