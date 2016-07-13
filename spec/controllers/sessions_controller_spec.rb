@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
   let(:valid_parameters) {
-    {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234'}
+    {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', verified: true}
   }
 
   let(:invalid_parameters) {
-    {name: 'John Doe', email: 'test@test.com', password: 'password12345', password_confirmation: 'password1234'}
+    {name: 'John Doe', email: 'test@test.com', password: 'password12345', password_confirmation: 'password1234', verified: true}
   }
 
   describe 'POST #create' do

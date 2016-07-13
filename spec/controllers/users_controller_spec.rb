@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   let(:valid_parameters_create) do
-    {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234'}
+    {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', rank: 0}
   end
 
   let(:invalid_parameters_create) do
-    {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password12345'}
+    {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password12345', rank: 0}
   end
 
   let(:valid_parameters_update) do
-    {name: 'John Smith'}
+    {name: 'John Smith', rank: 3}
   end
 
   let(:invalid_parameters_update) do
