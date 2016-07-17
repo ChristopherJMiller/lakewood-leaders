@@ -1,4 +1,7 @@
 <div class='main-div'>
+  <% if logged_in && User.find_by_id(session[:user_id]).rank >= 2 %>
+    <%= link_to 'Edit Event', edit_event_path(@event.id), class: 'btn btn-success pull-xs-right' %>
+  <% end %>
   <% current_user_in_event = !@event.participants.find_by_user_id(current_user).nil? %>
   <% if !session[:user_id].nil? %>
       <%= button_to ((current_user_in_event && 'Signed Up') or 'Sign Up For Event'), {event_id: @event.id, participant: {user_id: current_user.id}, controller: :participants, action: :create}, disabled: current_user_in_event, remote: true, method: :post, class: 'btn btn-primary pull-xs-right', id: 'request_join' %>
