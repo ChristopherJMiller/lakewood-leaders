@@ -1,4 +1,5 @@
 <div class="main-div">
+  <input type="text" id="user_search" class="form-control" placeholder="Search by Name">
   <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
     <h1>Users who have not paid their fees</h1>
     <table class="table table-striped">
