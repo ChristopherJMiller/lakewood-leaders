@@ -70,7 +70,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe 'GET #new' do
-    it 'assigns a new event as @tevenevent' do
+    it 'assigns a new event as @event' do
       get :new
       expect(assigns(:event)).to be_a_new(Event)
     end
