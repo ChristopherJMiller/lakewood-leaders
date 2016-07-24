@@ -36,6 +36,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Use respond_to in controller and respond_with
 gem 'responders'
 
+#Use delayed_job for use in email blasts
+gem 'delayed_job_active_record'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

@@ -74,7 +74,7 @@ RSpec.describe UsersController, type: :controller do
         expect {
           post :create, {user: valid_parameters_create}
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
-  end
+      end
     end
 
     context 'with invalid parameters' do

@@ -87,6 +87,12 @@ RSpec.describe AnnouncementsController, type: :controller do
               post :create, {announcement: valid_parameters}, valid_session_admin
             }.to change(Announcement, :count).by(1)
           end
+
+          it 'sends an email' do
+            expect {
+              post :create, {announcement: valid_parameters}, valid_session_admin
+            }.to change {Delayed::Job.count}.by(1)
+          end
         end
 
         context 'with invalid parameters' do

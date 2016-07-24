@@ -59,6 +59,11 @@ GEM
     concurrent-ruby (1.0.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
+      delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -191,6 +196,7 @@ DEPENDENCIES
   chart-js-rails
   coffee-rails (~> 4.1.0)
   database_cleaner
+  delayed_job_active_record
   factory_girl_rails
   ffaker
   font-awesome-rails
