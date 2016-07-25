@@ -1,0 +1,17 @@
+<div class="media">
+  <div class="media-body">
+    <h4 class="media-heading"><%= announcement.title %>
+    <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+      <%= link_to edit_announcement_path(announcement), class: 'btn btn-sm btn-primary' do %>
+        <i class="fa fa-cog"></i> Edit Announcement
+      <% end %>
+    <% end %><br>
+    <small class="text-muted">by <%= announcement.user.name %> <%= format_time announcement.created_at %></small></h4>
+    <%= announcement.post %>
+    <% if %>
+      <br>
+      <small class="text-muted">Last Updated: <%= format_time announcement.updated_at %></small>
+    <% end %>
+  </div>
+</div>
+<hr>

@@ -73,6 +73,30 @@ RSpec.describe AnnouncementsController, type: :controller do
     end
   end
 
+  describe 'GET #edit' do
+    context 'with a valid announcement' do
+      before(:each) do
+        get :edit, {id: announcement.id}
+      end
+
+      it 'returns HTTP status 200 (OK)' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'assigns the requested announcement as @announcement' do
+        expect(assigns(:announcement)).to eq(announcement)
+      end
+    end
+
+    context 'with an invalid event' do
+      it 'returns HTTP status 404 (Not Found)' do
+        expect {
+          get :edit, {id: -1}
+        }.to raise_error(ActionController::RoutingError)
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'while logged in' do
       context 'as an admin' do
