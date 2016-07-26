@@ -4,7 +4,7 @@
 redirect = () ->
   window.location.replace "/"
 
-$(document).ready ->
+$(document).on 'turbolinks:load', ->
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('p').remove()

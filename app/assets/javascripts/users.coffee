@@ -7,7 +7,7 @@ redirect = () ->
 String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
-$(document).ready ->
+$(document).on 'turbolinks:load', ->
   $('[name="user[rank]"]').change ->
     $(this).parent().submit()
   $('#user_search').change ->

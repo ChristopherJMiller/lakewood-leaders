@@ -10,7 +10,7 @@ redirect = () ->
 String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
-$(document).ready ->
+$(document).on 'turbolinks:load', ->
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()

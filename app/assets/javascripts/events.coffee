@@ -7,7 +7,7 @@ redirect = () ->
 String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
-$(document).ready ->
+$(document).on 'turbolinks:load', ->
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
@@ -17,7 +17,7 @@ $(document).ready ->
     if $(this).hasClass('edit_event')
       setTimeout (window.location.href = window.location.href), 2000
     else
-      setTimeout redirect, 2000
+      setTimeout redirect, 1000
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error
