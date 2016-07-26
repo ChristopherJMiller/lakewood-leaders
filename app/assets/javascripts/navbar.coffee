@@ -6,7 +6,7 @@ String::capitalizeFirstLetter = () ->
 
 $(document).ready ->
   $('#navbar_logout').parent().on 'ajax:success', ->
-    setTimeout redirect, 250
+    setTimeout redirect, 0
   $('#navbar_logout').parent().on 'ajax:error', ->
     alert 'An error has occured, are you connected to the internet?'
 
