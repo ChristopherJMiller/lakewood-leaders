@@ -29,4 +29,5 @@
 
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
+  <%= button_to 'Remove Event', events_path { action: 'destroy', id: @event.id }, method: :delete, remote: false, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
 </div>
