@@ -14,6 +14,5 @@
 
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
-  <%= button_to 'Remove Event', events_path { action: 'destroy', id: @announcement.id }, method: :delete, remote: false, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
-
+  <%= button_to 'Remove Announcement', { action: 'destroy', id: @announcement.id }, method: :delete, remote: true, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
 </div>
