@@ -9,6 +9,6 @@
   <h1><%= @event.name %></h1>
   <h5 class='text-muted'>Location: <%= @event.location %></h5>
   <h5 class='text-muted'>Time: <%= format_time @event.start_time %> - <%= format_time @event.end_time %></h5>
-  <p><%= @event.description %></p>
+  <p><%= simple_format @event.description %></p>
   <%= link_to 'View Participants', event_participants_path(@event.id), class: 'btn btn-secondary btn-lg btn-block' %>
 </div>
