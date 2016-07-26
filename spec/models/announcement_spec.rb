@@ -27,7 +27,7 @@ RSpec.describe Announcement, type: :model do
   end
 
   it 'should not be valid with an invalid post length' do
-    announcement = Announcement.new(title: 'Test Announcement', post: '0' * 1025, user_id: user.id)
+    announcement = Announcement.new(title: 'Test Announcement', post: '0' * 5121, user_id: user.id)
     expect(announcement).to_not be_valid
   end
 

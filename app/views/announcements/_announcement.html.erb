@@ -1,17 +1,14 @@
 <div class="media">
   <div class="media-body">
     <h4 class="media-heading"><%= announcement.title %>
-    <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
-      <%= link_to edit_announcement_path(announcement), class: 'btn btn-sm btn-primary' do %>
-        <i class="fa fa-cog"></i> Edit Announcement
-      <% end %>
-    <% end %><br>
+    <br>
     <small class="text-muted">by <%= announcement.user.name %> <%= format_time announcement.created_at %></small></h4>
-    <%= announcement.post %>
-    <% if %>
+    <%= truncate announcement.post, length: 500 %>
+    <% if announcement.created_at != announcement.updated_at %>
       <br>
       <small class="text-muted">Last Updated: <%= format_time announcement.updated_at %></small>
     <% end %>
+    <%= link_to 'View', announcement_path(announcement), class: 'btn btn-primary pull-xs-right' %>
   </div>
 </div>
 <hr>

@@ -16,6 +16,6 @@ class Announcement < ActiveRecord::Base
   validates :title, presence: true
   validates :title, length: { maximum: 64 }
   validates :post, presence: true
-  validates :post, length: { maximum: 1024 }
+  validates :post, length: { maximum: 5120 }
   validates :user, presence: true
 end
