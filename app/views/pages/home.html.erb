@@ -1,0 +1,18 @@
+<div style='background: url(<%= asset_path 'cover.jpg' %>) no-repeat center; background-size: cover' class="opening">
+  <h1 class="display-1 center"><div style="height: 100%; margin-top: 25%">The leaders of today, <br><small>who make the difference of tomorrow.</small></div></h1>
+</div>
+<div class="main-div">
+  <h1>About Us</h1>
+  <hr>
+  <p>Lakewood Leaders is an organization that supports team work and leadership through community service
+  events. Providing opportunity to support the community and give back to charity is the main goal of the organization. The members and their participation
+  are the key to making Lakewood Leaders as successful as it is. As a club and as a team, we work hard to inspire others and give back as much as we can.</p>
+  <h1>Our Officers</h1>
+  <hr>
+  todo
+  <h1>Recent Announcements</h1>
+  <hr>
+  <div class="card-columns">
+    <%= render partial: 'announcement', collection: Announcement.last(3), as: :announcement %>
+  </div>
+</div>
