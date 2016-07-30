@@ -1,7 +1,8 @@
+<% mute_text = participant.event.finished ? 'text-muted' : '' %>
 <tr>
-  <td class='event_name'><%= participant.event.name %></td>
-  <td class='event_desc'><%= participant.event.location %></td>
-  <td class='event_time'><%= format_time participant.event.start_time %> EST</td>
-  <td class='event_time'><%= format_time participant.event.end_time %> EST</td>
-  <td class='event_view'><%= link_to 'View', event_path(participant.event.id), class: 'btn btn-primary' %></td>
+  <td class='event_name <%= mute_text %>'><%= participant.event.name %></td>
+  <td class='event_desc <%= mute_text %>'><%= participant.event.location %></td>
+  <td class='event_time <%= mute_text %>'><%= format_time participant.event.start_time %> EST</td>
+  <td class='event_time <%= mute_text %>'><%= format_time participant.event.end_time %> EST</td>
+  <td class='event_view <%= mute_text %>'><%= link_to 'View', event_path(participant.event.id), class: 'btn btn-primary' %></td>
 </tr>
