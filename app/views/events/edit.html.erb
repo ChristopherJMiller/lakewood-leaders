@@ -27,7 +27,13 @@
       <%= f.datetime_select :end_time, class: 'form-control' %>
     </fieldset>
 
+    <fieldset class="form-group">
+      <%= f.label :finished, class: 'form-control-label' %>
+      <%= f.check_box :finished, class: 'form-check-input' %>
+    </fieldset>
+
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
+  <hr>
   <%= button_to 'Remove Event', { action: 'destroy', id: @event.id }, method: :delete, remote: true, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
 </div>

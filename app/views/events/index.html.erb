@@ -6,10 +6,16 @@
       <% end %>
     <% end %>
   <% end %>
-  <h1>All Events</h1>
+  <h1>Available Events</h1>
   <table class="table table-striped">
     <tbody>
-      <%= render @events %>
+      <%= render partial: 'event', collection: Event.where("finished = ?", false), as: :event or 'No avaliable events to join.'%>
+    </tbody>
+  </table>
+  <h1>Past Events</h1>
+  <table class="table table-striped">
+    <tbody>
+      <%= render partial: 'event', collection: Event.where("finished = ?", true), as: :event or 'No past events have been found.'%>
     </tbody>
   </table>
 </div>

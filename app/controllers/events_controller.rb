@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     if !User.find_by_id(session[:user_id]).is_admin
       head status: :forbidden and return
     end
-    event = Event.new(event_parameters)
+    event = Event.new(event_parameters_create)
     if event.save
       head status: :created, location: event_path(event)
     else
@@ -58,7 +58,7 @@ class EventsController < ApplicationController
     if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
       head status: :forbidden and return
     end
-    if event.update(event_parameters)
+    if event.update(event_parameters_update)
       head status: :ok
     else
       render json: {error: event.errors}, status: :bad_request
@@ -79,9 +79,13 @@ class EventsController < ApplicationController
 
   private
 
-  def event_parameters
+  def event_parameters_create
     parameters = params.require(:event).permit(:name, :description, :location, :start_time, :end_time)
     parameters[:finished] = false
     return parameters
+  end
+
+  def event_parameters_update
+    params.require(:event).permit(:name, :description, :location, :start_time, :end_time, :finished)
   end
 end
