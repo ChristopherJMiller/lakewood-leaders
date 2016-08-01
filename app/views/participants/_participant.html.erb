@@ -2,4 +2,7 @@
   <td class='part_name'><%= participant.user.name %></td>
     <td class='user_rank'><%= rank_title participant.user.rank %></td>
   <td class='part_view'><%= link_to 'View', user_path(participant.user_id), class: 'btn btn-primary' %></td>
+  <% if participant.user.is_admin %>
+    <td class='part_view'><%= button_to 'Kick', {event_id: participant.event.id, id: participant.id, controller: :participants, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %></td>
+  <% end %>
 </tr>
