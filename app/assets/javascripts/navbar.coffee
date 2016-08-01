@@ -6,7 +6,7 @@ String::capitalizeFirstLetter = () ->
 
 $(document).on 'turbolinks:load', ->
   $('#navbar_logout').parent().on 'ajax:success', ->
-    setTimeout redirect, 0
+    setTimeout window.location.replace '/', 0
   $('#navbar_logout').parent().on 'ajax:error', ->
     alert 'An error has occured, are you connected to the internet?'
 

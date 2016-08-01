@@ -19,12 +19,12 @@
 
     <fieldset class="form-group">
       <%= f.label :start_time, class: 'form-control-label' %>
-      <%= f.datetime_select :start_time, class: 'form-control' %>
+      <%= f.datetime_select :start_time, {:ampm => true} %>
     </fieldset>
 
     <fieldset class="form-group">
       <%= f.label :end_time, class: 'form-control-label' %>
-      <%= f.datetime_select :end_time, class: 'form-control' %>
+      <%= f.datetime_select :end_time, {:ampm => true} %>
     </fieldset>
 
 

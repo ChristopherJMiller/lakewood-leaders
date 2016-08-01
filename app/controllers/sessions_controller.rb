@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       if user && !user.verified
         errors.add(:email, "This user is not verified, please check your email.")
       end
-      if !user.authenticate(params[:password])
+      if user && !user.authenticate(params[:password])
         errors.add(:password, "Invalid email and password combination")
       end
       render json: {error: errors}, status: :bad_request
