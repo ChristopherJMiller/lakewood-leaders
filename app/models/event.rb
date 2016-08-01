@@ -8,6 +8,7 @@
 # [start_time] A datetime that contains the date and time for the beginning of the event.
 # [end_time] A datetime that contains the date and time for the end of the event.
 # [finished] A boolean that defines if the event is over or not.
+# [max_participants] A number that defines the greatest number of participants for that event.
 # == Attribute
 # * Name must be present
 # * Description must be present and has a maximum of 2048 characters
@@ -31,6 +32,13 @@ class Event < ActiveRecord::Base
 
   validates :finished, inclusion: [true, false]
 
+  validates :max_participants, presence: true
+  validates :max_participants, numericality: { greater_than: 0 }
+
   has_many :participants
   has_many :users, through: :participants
+
+  def full
+    participants.count >= max_participants
+  end
 end

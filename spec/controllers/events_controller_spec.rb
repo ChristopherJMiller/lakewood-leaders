@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
   let(:valid_parameters) do
-    {name: 'Test Event', description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29.000000000 -0500', end_time: '2016-07-02 23:57:29.000000000 -0500', finished: true}
+    {name: 'Test Event', description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29.000000000 -0500', end_time: '2016-07-02 23:57:29.000000000 -0500', finished: true, max_participants: 5}
   end
 
   let(:invalid_parameters) do
-    {name: nil, description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29', end_time: '2016-07-02 23:57:29', finished: true}
+    {name: nil, description: 'Test description', location: '1234 Street St. New York, USA', start_time: '2016-07-01 23:57:29', end_time: '2016-07-02 23:57:29', finished: true, max_participants: 5}
   end
 
   let(:event) do
@@ -160,6 +160,7 @@ RSpec.describe EventsController, type: :controller do
             expect(event.start_time).to eq(valid_parameters[:start_time])
             expect(event.end_time).to eq(valid_parameters[:end_time])
             expect(event.finished).to eq(valid_parameters[:finished])
+            expect(event.max_participants).to eq(valid_parameters[:max_participants])
           end
         end
 

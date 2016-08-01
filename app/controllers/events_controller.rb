@@ -80,12 +80,12 @@ class EventsController < ApplicationController
   private
 
   def event_parameters_create
-    parameters = params.require(:event).permit(:name, :description, :location, :start_time, :end_time)
+    parameters = params.require(:event).permit(:name, :description, :location, :start_time, :end_time, :max_participants)
     parameters[:finished] = false
     return parameters
   end
 
   def event_parameters_update
-    params.require(:event).permit(:name, :description, :location, :start_time, :end_time, :finished)
+    params.require(:event).permit(:name, :description, :location, :start_time, :end_time, :finished, :max_participants)
   end
 end
