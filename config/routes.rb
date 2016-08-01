@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :users, only: [:index, :show, :new, :create, :edit, :update] do
-    put '/change_password', to: 'users#change_password'
+    patch '/change_password', to: 'users#change_password'
   end
 
   resources :events do

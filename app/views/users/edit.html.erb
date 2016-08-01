@@ -11,7 +11,7 @@
   <% end %>
 
   <h2>Change Password</h2>
-  <%= form_for @user, url: user_change_password_path, remote: true do |f| %>
+  <%= form_for @user, url: user_change_password_path(params[:id]), remote: true do |f| %>
 
     <fieldset class="form-group">
       <%= f.label :password, class: 'form-control-label' %>
