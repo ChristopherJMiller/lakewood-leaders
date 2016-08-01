@@ -27,6 +27,11 @@
       <%= f.datetime_select :end_time, {:ampm => true} %>
     </fieldset>
 
+    <fieldset class="form-group">
+      <%= f.label :max_participants, class: 'form-control-label' %>
+      <%= f.number_field :max_participants, class: 'form-control-number', max: '1000', min: '1' %>
+    </fieldset>
+
 
     <%= f.submit 'Create', class: 'btn btn-primary' %>
   <% end %>
