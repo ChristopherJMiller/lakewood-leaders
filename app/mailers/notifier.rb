@@ -14,5 +14,6 @@ class Notifier < ApplicationMailer
     def announce(announcement)
       @announcement = announcement
       mail to: User.connection.select_values(User.select("email").to_sql), subject: "Lakewood Leaders: #{@announcement.title}"
+      mail to: User.connection.select_values(User.select("parent_email").where("parent_verified": true).where.not('user.parent_email' => nil).to_sql), subject: "Lakewood Leaders: #{@announcement.title}"
     end
 end
