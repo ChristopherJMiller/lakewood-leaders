@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   get '/verify_email/:token', to: 'users#verify_email'
+  get '/verify_parent_email/:token', to: 'users#verify_parent_email'
 
   resource :sessions, only: [:create, :destroy]
   resource :tokens, only: [:create]
