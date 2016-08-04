@@ -5,6 +5,10 @@ RSpec.describe UsersController, type: :controller do
     {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', rank: 0}
   end
 
+  let(:valid_parameters_create_with_parent) do
+    {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', rank: 0, parent_email: 'parent@test.com'}
+  end
+
   let(:invalid_parameters_create) do
     {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password12345', rank: 0}
   end
@@ -59,21 +63,42 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid parameters' do
-      it 'creates a new user' do
-        expect {
+      context 'without a parent defined' do
+        it 'creates a new user' do
+          expect {
+            post :create, {user: valid_parameters_create}
+          }.to change(User, :count).by(1)
+        end
+
+        it 'returns HTTP status 201 (Created)' do
           post :create, {user: valid_parameters_create}
-        }.to change(User, :count).by(1)
+          expect(response).to have_http_status(:created)
+        end
+
+        it 'sends an email' do
+          expect {
+            post :create, {user: valid_parameters_create}
+          }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end
       end
 
-      it 'returns HTTP status 201 (Created)' do
-        post :create, {user: valid_parameters_create}
-        expect(response).to have_http_status(:created)
-      end
+      context 'with a parent email defined' do
+        it 'creates a new user' do
+          expect {
+            post :create, {user: valid_parameters_create_with_parent}
+          }.to change(User, :count).by(1)
+        end
 
-      it 'sends an email' do
-        expect {
-          post :create, {user: valid_parameters_create}
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        it 'returns HTTP status 201 (Created)' do
+          post :create, {user: valid_parameters_create_with_parent}
+          expect(response).to have_http_status(:created)
+        end
+
+        it 'sends an email' do
+          expect {
+            post :create, {user: valid_parameters_create_with_parent}
+          }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end
       end
     end
 

@@ -6,6 +6,11 @@ class Notifier < ApplicationMailer
       mail to: user.email, subject: 'Lakewood Leaders Email Verification'
     end
 
+    def verify_parent_email(user)
+      @user = user
+      mail to: user.parent_email, subject: 'Lakewood Leaders Parent Email Verification'
+    end
+
     def announce(announcement)
       @announcement = announcement
       mail to: User.connection.select_values(User.select("email").to_sql), subject: "Lakewood Leaders: #{@announcement.title}"

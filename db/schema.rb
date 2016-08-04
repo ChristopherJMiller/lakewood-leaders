@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801163500) do
+ActiveRecord::Schema.define(version: 20160804163357) do
 
   create_table "announcements", force: :cascade do |t|
     t.string   "title"
@@ -76,9 +76,12 @@ ActiveRecord::Schema.define(version: 20160801163500) do
     t.string   "password_digest"
     t.string   "verify_token"
     t.boolean  "verified"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.integer  "rank"
+    t.string   "parent_email"
+    t.boolean  "parent_verified"
+    t.string   "parent_verify_token"
   end
 
 end

@@ -40,6 +40,9 @@ class UsersController < ApplicationController
 
     if user.save
       Notifier.verify_email(user).deliver_now
+      if !user.parent_email.blank?
+        Notifier.verify_parent_email(user).deliver_now
+      end
       head status: :created
     else
       render json: {error: user.errors}, status: :bad_request
@@ -86,10 +89,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def verify_parent_email
+    user = User.find_by_parent_verify_token(params[:token])
+    if user
+      user.update_attribute(:parent_verified, true)
+      respond_to :html
+    else
+      head status: :bad_request
+    end
+  end
+
   private
 
   def user_parameters_create
     parameters = params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    if parameters[:parent_email].blank?
+      parameters[:parent_email] = nil
+    else
+      parameters[:parent_email] = params[:parent_email]
+    end
+    parameters[:parent_verified] = false
     parameters[:verified] = false
     parameters[:rank] = 0
     return parameters

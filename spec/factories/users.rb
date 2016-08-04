@@ -9,5 +9,8 @@ FactoryGirl.define do
     verify_token ''
 
     rank 0
+
+    parent_verified false
+    parent_verify_token ''
   end
 end
