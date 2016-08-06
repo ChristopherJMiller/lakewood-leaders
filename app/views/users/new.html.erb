@@ -13,6 +13,12 @@
     </fieldset>
 
     <fieldset class="form-group">
+      <%= f.label :parent_email, class: 'form-control-label' %>
+      <%= f.text_field :parent_email, class: 'form-control', placeholder: 'Parent Email' %>
+      <span class='text-muted'>This Field is Optional</span>
+    </fieldset>
+
+    <fieldset class="form-group">
       <%= f.label :password, class: 'form-control-label' %>
       <%= f.password_field :password, class: "form-control", placeholder: 'Password' %>
     </fieldset>
@@ -20,6 +26,10 @@
     <fieldset class="form-group">
       <%= f.label :password_confirmation, class: 'form-control-label' %>
       <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password confirmation' %>
+    </fieldset>
+
+    <fieldset>
+      <%= recaptcha_tags(id: 'user_base', ajax: true) %>
     </fieldset>
 
     <%= f.submit 'Register', class: 'btn btn-primary' %>

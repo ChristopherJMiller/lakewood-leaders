@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_parameters_create)
 
-    if user.save
+    if verify_recaptcha(model: user) && user.save
       Notifier.verify_email(user).deliver_now
       if !user.parent_email.blank?
         Notifier.verify_parent_email(user).deliver_now

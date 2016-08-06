@@ -21,7 +21,7 @@ $(document).on 'turbolinks:load', ->
     console.log($(".user_name:not(:contains(#{text}))"))
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
-    $(this).children('fieldset').children('div').remove()
+    $(this).children('.form-group').children('.error-label').remove()
   $('form[data-remote]').on 'ajax:success', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     if $(this).hasClass('edit_user')
@@ -30,9 +30,11 @@ $(document).on 'turbolinks:load', ->
       setTimeout redirect, 2000
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     errors = xhr.responseJSON.error
+    console.log(errors)
+    grecaptcha.reset()
     for form of errors
       fieldSet = $(this).find("#user_#{form}").parent()
-      fieldSet.addClass 'form-group has-danger'
+      fieldSet.addClass 'has-danger'
       for key of errors[form]
         error = form.capitalizeFirstLetter().replace(/_/g, ' ') + ' ' + errors[form][key]
-        fieldSet.append("<div><small class=\"text-danger\">#{error}</small></div>")
+        fieldSet.append("<div class='error-label'><small class=\"text-danger\">#{error}</small></div>")

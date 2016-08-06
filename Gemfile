@@ -39,6 +39,9 @@ gem 'responders'
 #Use delayed_job for use in email blasts
 gem 'delayed_job_active_record'
 
+#Use recatpcha for anti spam form protection
+gem "recaptcha", require: "recaptcha/rails"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
