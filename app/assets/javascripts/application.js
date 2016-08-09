@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-sprockets
+//= require Chart
+//= require navbar
 //= require turbolinks
-//= require_tree .

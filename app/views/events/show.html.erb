@@ -1,0 +1,26 @@
+<div class='main-div'>
+  <% if logged_in && User.find_by_id(session[:user_id]).rank >= 2 %>
+    <%= link_to 'Edit Event', edit_event_path(@event.id), class: 'btn btn-success pull-xs-right' %>
+  <% end %>
+  <% current_user_in_event = !@event.participants.find_by_user_id(current_user).nil? %>
+  <% if !session[:user_id].nil? and User.find_by_id(session[:user_id]).rank > 0 and !@event.finished? and !@event.full %>
+      <%= button_to ((current_user_in_event && 'Signed Up') or 'Sign Up For Event'), {event_id: @event.id, participant: {user_id: current_user.id}, controller: :participants, action: :create}, disabled: current_user_in_event, remote: true, method: :post, class: 'btn btn-primary pull-xs-right', id: 'request_join' %>
+  <% end %>
+  <% else if current_user_in_event and !@event.finished? %>
+    <%= button_to 'Leave Event', {event_id: @event.id, id: Participant.find_by_user_id(current_user).id, controller: :participants, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger pull-xs-right' %>
+  <% end %>
+  <h1><%= @event.name %></h1>
+  <% if @event.finished? %>
+    <h1 class="text-info">Event Finished</h1>
+  <% end %>
+  <h5 class='text-muted'>Location: <%= @event.location %></h5>
+  <h5 class='text-muted'>Time: <%= format_time @event.start_time %> - <%= format_time @event.end_time %></h5>
+  <h5 class='text-muted'>Max Participants: <%= @event.max_participants %></h5>
+  <% if !@event.full %>
+    <h5 class='text-muted'>Available Slots Left: <%= @event.max_participants - @event.participants.count %></h5>
+  <% else %>
+    <h5 class='text-warning'>This Event is Full</h5>
+  <% end %>
+  <p><%= simple_format @event.description %></p>
+  <%= link_to 'View Participants', event_participants_path(@event.id), class: 'btn btn-secondary btn-lg btn-block' %>
+</div>

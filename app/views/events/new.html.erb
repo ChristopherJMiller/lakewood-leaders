@@ -1,0 +1,38 @@
+<div class="main-div">
+  <h1>Create a New Event</h1>
+
+  <%= form_for @event, remote: true do |f| %>
+    <fieldset class="form-group">
+      <%= f.label :name, class: 'form-control-label' %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'Event Name' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :description, class: 'form-control-label' %>
+      <%= f.text_area :description, cols: 20, rows: 10, class: 'form-control', placeholder: 'Description' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :location, class: 'form-control-label' %>
+      <%= f.text_field :location, class: 'form-control', placeholder: 'Location' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :start_time, class: 'form-control-label' %>
+      <%= f.datetime_select :start_time, {:ampm => true} %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :end_time, class: 'form-control-label' %>
+      <%= f.datetime_select :end_time, {:ampm => true} %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :max_participants, class: 'form-control-label' %>
+      <%= f.number_field :max_participants, class: 'form-control-number', max: '1000', min: '1' %>
+    </fieldset>
+
+
+    <%= f.submit 'Create', class: 'btn btn-primary' %>
+  <% end %>
+</div>

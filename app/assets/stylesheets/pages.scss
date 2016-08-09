@@ -1,0 +1,73 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+div.opening {
+  height: 100vh;
+  width: auto;
+  justify-content: space-between;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+nav {
+  margin-bottom: 0  !important;
+}
+
+.officer {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.officer.left {
+  padding-right: 0%;
+}
+
+.officer.right {
+  padding-left: 0%;
+}
+
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  display: block;
+  height: inherit;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: text-bottom;
+  text-align: center;
+}
+
+small:has(> h1.center) {
+  line-height: normal !important;
+}
+
+hr {
+  width: 20%;
+  margin-left: 0;
+  margin-top: 0.5rem;
+}
+
+h1.display-1 {
+  font-weight: 300;
+  color: white;
+  text-shadow: #000 0px 0px 3px,   #000 0px 0px 3px,   #000 0px 0px 3px,
+             #000 0px 0px 3px,   #000 0px 0px 3px,   #000 0px 0px 3px;
+}
+
+/* Medium devices (desktops, 992px and up) @screen-md-min*/
+@media (min-width: 992px) {
+
+  .officer.left {
+    padding-right: 16.6666667%;
+  }
+
+  .officer.right {
+    padding-left: 16.6666667%;
+  }
+}
