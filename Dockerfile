@@ -1,14 +1,15 @@
 FROM ruby:2.3
+ENV RAILS_ENV production
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends mariadb-client
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mariadb-client nodejs
 
 WORKDIR /usr/src/app
-COPY Gemfile* ./
-RUN bundle install
-COPY . .
-RUN RAILS_ENV=production rake db:create db:migrate
+ADD Gemfile* ./
+RUN bundle install --without development test
+ADD . .
 RUN rake assets:precompile
 
 EXPOSE 3000
-CMD ["unicorn", "-p", "3000", "-c", "./config/unicorn.rb"]
+RUN chmod +x start.sh
+CMD ["/usr/src/app/start.sh"]
