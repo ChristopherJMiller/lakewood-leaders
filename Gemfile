@@ -7,6 +7,9 @@ gem 'rails', '4.2.5.2'
 gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
 # Use bootstrap for styling
 gem 'bootstrap'
 # Use font awesome for icons
@@ -44,6 +47,9 @@ gem "recaptcha", require: "recaptcha/rails"
 
 # Use Unicorn as the app server
 gem 'unicorn'
+
+#Use MySQL2 for production database
+gem 'mysql2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
