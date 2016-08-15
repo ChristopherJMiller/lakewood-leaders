@@ -62,7 +62,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: postfix,
+    address: 'postfix',
     port: 587,
     domain: 'mctherealm.net',
     user_name: ENV["MAIL_USERNAME"],
