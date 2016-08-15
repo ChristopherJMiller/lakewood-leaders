@@ -60,6 +60,19 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: postfix,
+    port: 587,
+    domain: 'mctherealm.net',
+    user_name: ENV["MAIL_USERNAME"],
+    password: ENV["MYSQL_PASSWORD"],
+    authentication: 'login',
+    openssl_verify_mode: 'peer'
+  }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'lakewoodleaders@mctherealm.net'}
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
