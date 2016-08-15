@@ -26,7 +26,7 @@ production:
   database: <%= ENV["MYSQL_DATABASE"] %>
   pool: 5
   timeout: 5000
-  host: mysql
+  host: mariadb
   port: 3306
   username: <%= ENV["MYSQL_USERNAME"] %>
   password: <%= ENV["MYSQL_PASSWORD"] %>
