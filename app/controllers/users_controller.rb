@@ -103,10 +103,10 @@ class UsersController < ApplicationController
 
   def user_parameters_create
     parameters = params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    if parameters[:parent_email].blank?
+    if params[:user][:parent_email].blank?
       parameters[:parent_email] = nil
     else
-      parameters[:parent_email] = params[:parent_email]
+      parameters[:parent_email] = params[:user][:parent_email]
     end
     parameters[:parent_verified] = false
     parameters[:verified] = false

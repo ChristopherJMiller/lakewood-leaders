@@ -1,5 +1,5 @@
 <%= @announcement.title %>
 --
-Posted by <%= @announcement.user.name %> at <%= format_time @announcement.create_at %>
+Posted by <%= @announcement.user.name %> at <%= @announcement.created_at.strftime('%b %d, %Y %I:%M %p') %>
 
 <%= @announcement.post %>
