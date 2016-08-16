@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       head status: :created
     else
       if user && !user.verified
-        errors.add(:email, "This user is not verified, please check your email.")
+        errors.add(:email, "This user is not verified, please check your email inbox and spam folder.")
       end
       if user && !user.authenticate(params[:password])
         errors.add(:password, "Invalid email and password combination")

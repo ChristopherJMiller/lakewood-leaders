@@ -24,6 +24,7 @@
 class User < ActiveRecord::Base
 
   before_create :add_token
+  before_create :add_parent_token
 
   has_secure_password
   validates :name, presence: true
@@ -60,4 +61,10 @@ class User < ActiveRecord::Base
           self.verify_token = SecureRandom.uuid
       end
     end
+
+  def add_parent_token
+    if self.parent_verify_token.blank?
+        self.parent_verify_token = SecureRandom.uuid
+    end
+  end
 end

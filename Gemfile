@@ -40,6 +40,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'responders'
 
 #Use delayed_job for use in email blasts
+gem "daemons"
 gem 'delayed_job_active_record'
 
 #Use recatpcha for anti spam form protection
