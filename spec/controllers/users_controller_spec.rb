@@ -97,7 +97,7 @@ RSpec.describe UsersController, type: :controller do
         it 'sends an email' do
           expect {
             post :create, {user: valid_parameters_create_with_parent}
-          }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          }.to change { ActionMailer::Base.deliveries.count }.by(2)
         end
       end
     end

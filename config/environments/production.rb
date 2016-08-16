@@ -66,9 +66,10 @@ Rails.application.configure do
     port: 587,
     domain: 'mctherealm.net',
     user_name: ENV["MAIL_USERNAME"],
-    password: ENV["MYSQL_PASSWORD"],
-    authentication: 'login',
-    openssl_verify_mode: 'peer'
+    password: ENV["MAIL_PASSWORD"],
+    authentication: 'plain',
+    :openssl_verify_mode  => 'none',
+    :enable_starttls_auto => true
   }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
