@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 div.opening {
   height: 100vh;
-  width: auto;
+  width: 100%;
   justify-content: space-between;
   display: flex;
   margin-bottom: 1em;
@@ -43,9 +43,7 @@ html, body {
   text-align: center;
 }
 
-small:has(> h1.center) {
-  line-height: normal !important;
-}
+
 
 hr {
   width: 20%;
@@ -61,7 +59,7 @@ h1.display-1 {
 }
 
 /* Medium devices (desktops, 992px and up) @screen-md-min*/
-@media (min-width: 992px) {
+@media (min-width: 768px) {
 
   .officer.left {
     padding-right: 16.6666667%;
