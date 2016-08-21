@@ -49,6 +49,9 @@ gem "recaptcha", require: "recaptcha/rails"
 # Use Unicorn as the app server
 gem 'unicorn'
 
+# Use puma as possible replacement for unicorn
+gem 'puma'
+
 #Use MySQL2 for production database
 gem 'mysql2'
 
