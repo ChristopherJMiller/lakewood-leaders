@@ -1,3 +1,11 @@
+<% if logged_in && !current_user.verified %>
+  <div class="alert alert-warning alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Warning!</strong> Your email address is not verified. Please check your inbox or spam folder for the verification email in order to begin receiving email updates.
+  </div>
+<% end %>
 <div style='background: url(<%= asset_path 'cover.jpg' %>) no-repeat center; background-size: cover' class="opening hidden-sm-down">
   <h1 class="display-1 center"><div style="height: 100%; margin-top: 25%"><small>The leaders of today, <br>who make the difference of tomorrow.</div></small></h1>
 </div>
