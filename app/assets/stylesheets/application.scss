@@ -48,9 +48,13 @@ nav.nav-margin-bottom {
   margin-bottom: 1rem;
 }
 
+.nav-item {
+  max-height: inherit;
+}
+
 div.main-div {
-  margin-left: 0%;
-  margin-right: 0%;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 /* Medium devices (desktops, 992px and up) @screen-md-min*/
