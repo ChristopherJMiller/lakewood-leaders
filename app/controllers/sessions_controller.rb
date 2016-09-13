@@ -8,9 +8,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       head status: :created
     else
-      if user && !user.authenticate(params[:password])
-        errors.add(:password, "Invalid email and password combination")
-      end
+      errors.add(:password, "Invalid email and password combination")
       render json: {error: errors}, status: :bad_request
     end
   end

@@ -3,6 +3,7 @@
 <head>
   <title>Lakewood Leaders</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag params[:controller], media: 'all', 'data-turbolinks-track' => 'reload' %>
   <%= javascript_include_tag params[:controller], 'data-turbolinks-track' => 'reload' %>
@@ -14,6 +15,11 @@
     <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
       <a class="navbar-brand hidden-sm-down" href="/">Lakewood Leaders</a>
       <ul class="nav navbar-nav">
+        <div class='hidden-sm-up'>
+          <%= link_to root_path, class: 'nav-link' do %>
+            <i class="fa fa-home" aria-hidden="true"></i> Front Page
+          <% end %>
+        </div>
         <li class="nav-item">
           <%= link_to announcements_path, class: 'nav-link' do %>
             <i class="fa fa-bullhorn" aria-hidden="true"></i> Announcements
@@ -26,11 +32,11 @@
         </li>
         <li class="nav-item">
           <%= link_to users_path, class: 'nav-link' do %>
-            <i class="fa fa-user" aria-hidden="true"></i> Members
+            <i class="fa fa-users" aria-hidden="true"></i> Members
           <% end %>
         </li>
         <div class="btn-group pull-xs-right">
-          <div class='hidden-sm-down'>
+          <div class='hidden-xs-down'>
             <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= (logged_in && User.find(session[:user_id]).email) || 'Guest' %>
             </a>
@@ -43,10 +49,17 @@
             </div>
           </div>
         </div>
-        <div class='hidden-md-up pull-sm-right'>
+        <div class='hidden-sm-up pull-sm-right'>
           <% if logged_in then %>
+            <div class='dropdown-divider'></div>
+            <%= link_to user_path(session[:user_id]), class: 'nav-item nav-link' do %>
+              <i class='fa fa-user' aria-hidden='true'></i> My Profile
+            <% end %>
+            <%= link_to edit_user_path(session[:user_id]), class: 'nav-item nav-link' do %>
+              <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
+            <% end %>
             <li class='nav-item'>
-              <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', id: 'navbar_logout' %>
+              <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', name: 'navbar_logout' %>
             </li>
           <% else %>
             <li class='nav-item'>
