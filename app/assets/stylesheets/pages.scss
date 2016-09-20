@@ -13,21 +13,6 @@ nav {
   margin-bottom: 0  !important;
 }
 
-.officer {
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.officer.left {
-  padding-right: 0%;
-}
-
-.officer.right {
-  padding-left: 0%;
-}
-
-
-
 html, body {
   height: 100%;
   margin: 0;
@@ -44,6 +29,9 @@ html, body {
 }
 
 
+.officers {
+  text-align: left;
+}
 
 hr {
   width: 20%;
@@ -60,6 +48,10 @@ h1.display-1 {
 
 /* Medium devices (desktops, 992px and up) @screen-md-min*/
 @media (min-width: 768px) {
+
+  .officers {
+    text-align: center;
+  }
 
   .officer.left {
     padding-right: 16.6666667%;
