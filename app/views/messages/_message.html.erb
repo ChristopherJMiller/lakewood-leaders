@@ -1,0 +1,5 @@
+<tr>
+  <td><%= format_time message.created_at %></td>
+  <td><%= message.subject %></td>
+  <td><%= link_to 'View', user_message_path(message.user.id, message.id), class: 'btn btn-primary' %></td>
+</tr>
