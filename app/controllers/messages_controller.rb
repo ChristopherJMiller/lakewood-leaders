@@ -22,6 +22,25 @@ class MessagesController < ApplicationController
     end
   end
 
+  def show
+    if session[:user_id].nil?
+      head status: :forbidden and return
+    end
+    if params[:user_id] == session[:user_id].to_s or User.find_by_id(session[:user_id]).is_admin
+      @message = Message.find_by_user_id_and_id(params[:user_id], params[:id])
+      if @message
+        respond_with @message
+      else
+        respond_to do |format|
+          format.html { not_found }
+          format.json { head status: :not_found }
+        end
+      end
+    else
+      head status: :forbidden and return
+    end
+  end
+
   def create
     if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
       head status: :forbidden and return

@@ -83,6 +83,49 @@ RSpec.describe MessagesController, type: :controller do
     end
   end
 
+  describe 'GET #show' do
+    context 'as own user' do
+      it 'assigns all messages as @messages' do
+        message_show = FactoryGirl.create(:message)
+        get :show, {user_id: message_show.user.id, id: message_show.id}, {user_id: message_show.user.id}
+        expect(assigns(:message)).to eq(message_show)
+      end
+    end
+
+    context 'as site admin' do
+      it 'assigns all messages as @messages' do
+        message_show = FactoryGirl.create(:message)
+        get :show, {user_id: message_show.user.id, id: message_show.id}, valid_session_admin
+        expect(assigns(:message)).to eq(message_show)
+      end
+    end
+
+    context 'as other user' do
+      it 'returns HTTP Error 403 (Forbidden)' do
+        message_show = FactoryGirl.create(:message)
+        get :show, {user_id: message_show.user.id, id: message_show.id}, valid_session
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'if logged out' do
+      it 'return HTTP Error 403 (Forbidden)' do
+        message_show = FactoryGirl.create(:message)
+        get :show, {user_id: message_show.user.id, id: message_show.id}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'if message does not exist' do
+      it 'return HTTP Error 404 (Not Found)' do
+        message = FactoryGirl.create(:message)
+        expect {
+          get :show, {user_id: message.user.id, id: -1}, valid_session_admin
+        }.to raise_error(ActionController::RoutingError)
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'while logged in' do
       context 'as an admin' do
