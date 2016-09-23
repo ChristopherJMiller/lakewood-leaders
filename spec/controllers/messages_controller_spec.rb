@@ -6,11 +6,11 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   let(:valid_parameters) do
-    {user_id: user.id, subject: 'Test Message', body: 'Test Body'}
+    {subject: 'Test Message', body: 'Test Body'}
   end
 
   let(:invalid_parameters) do
-    {user_id: nil, subject: 'Test Message', body: 'Test Body'}
+    {subject: nil, body: 'Test Body'}
   end
 
   let(:user_admin) do

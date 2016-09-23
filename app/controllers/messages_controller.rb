@@ -72,6 +72,8 @@ class MessagesController < ApplicationController
   private
 
   def message_parameters_create
-    params.require(:message).permit(:user_id, :subject, :body)
+    parameters = params.require(:message).permit(:subject, :body)
+    parameters[:user_id] = params[:user_id]
+    return parameters
   end
 end
