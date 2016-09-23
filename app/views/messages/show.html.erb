@@ -1,0 +1,16 @@
+<div class='main-div'>
+  <hr>
+    <h2><%= @message.subject %>
+    <div class='pull-md-right'>
+      <%= button_to url_for({
+        action: :destroy,
+        user_id: @message.user.id,
+        id: @message.id
+        }), remote: true, method: :delete, class: 'btn btn-danger' do %>
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+      <% end %>
+    </div></h2>
+    <h4><small class='text-muted'><%= format_time @message.created_at %></small></h4>
+  <hr>
+  <p><%= simple_format @message.body %>
+</div>
