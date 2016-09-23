@@ -7,13 +7,13 @@
   <table class="table">
   <thead>
     <tr>
-      <th>Date</th>
       <th>Subject</th>
+      <th>Date</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-
+    <%= render @messages or 'Your inbox is currently empty.' %>
   </tbody>
 </table>
 </div>
