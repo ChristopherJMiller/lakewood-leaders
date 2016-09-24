@@ -13,7 +13,12 @@ class Notifier < ApplicationMailer
 
     def announce(announcement)
       @announcement = announcement
-      mail to: User.connection.select_values(User.select("email").to_sql), subject: "Lakewood Leaders: #{@announcement.title}"
-      mail to: User.connection.select_values(User.select("parent_email").where("parent_verified": true).where.not('user.parent_email' => nil).to_sql), subject: "Lakewood Leaders: #{@announcement.title}"
+      headers['List-Unsubscribe'] = "<https://leaders.lrhsclubs.com/unsubscribe/>"
+      User.connection.select_values(User.select("parent_email").where("parent_verified": true).where.not(parent_email: nil).to_sql) do |parent|
+        mail to: parent, subject: "Lakewood Leaders: #{@announcement.title}"
+      end
+      User.connection.select_values(User.select("email").where(verified: true).to_sql).each do |user|
+        mail to: user, subject: "Lakewood Leaders: #{@announcement.title}"
+      end
     end
 end
