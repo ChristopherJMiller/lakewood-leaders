@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show, :new, :create, :edit, :update] do
     patch '/change_password', to: 'users#change_password'
+    resources :messages, except: [:edit, :update]
   end
 
   resources :events do

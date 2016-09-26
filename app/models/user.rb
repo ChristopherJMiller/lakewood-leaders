@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
 
   validates :rank, presence: true
 
+  has_many :messages
+
   # Renders a user as json with the password_digest excluded.
   def as_json(options={})
     options[:except] ||= [:password_digest]

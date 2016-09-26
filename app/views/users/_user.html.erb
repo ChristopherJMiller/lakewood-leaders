@@ -9,6 +9,7 @@
       </fieldset>
     <% end %>
   </td>
+  <td><%= link_to 'Compose Message to User', new_user_message_path(user.id), class: 'btn btn-secondary' %></td>
   <% end %>
   <td class='user_view'><%= link_to 'View', user_path(user.id), class: 'btn btn-primary' %></td>
 </tr>

@@ -1,0 +1,19 @@
+<div class='main-div'>
+  <% if logged_in && params[:user_id] == session[:user_id].to_s %>
+    <h1>Your Inbox</h1>
+  <% else %>
+    <h1>Inbox for <%= User.find_by_id(params[:user_id]).name %></h1>
+  <% end %>
+  <table class="table">
+  <thead>
+    <tr>
+      <th>Subject</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @messages or 'Your inbox is currently empty.' %>
+  </tbody>
+</table>
+</div>

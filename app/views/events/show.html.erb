@@ -1,6 +1,12 @@
 <div class='main-div'>
-  <% if logged_in && User.find_by_id(session[:user_id]).rank >= 2 %>
-    <%= link_to 'Edit Event', edit_event_path(@event.id), class: 'btn btn-success pull-xs-right' %>
+  <% if logged_in %>
+    <% if User.find_by_id(session[:user_id]).rank >= 2 %>
+      <%= link_to 'Edit Event', edit_event_path(@event.id), class: 'btn btn-success pull-xs-right' %>
+    <% end %>
+  <% else %>
+    <div class="alert alert-info" role="alert">
+      <strong>You are not logged in.</strong> Please <u><%= link_to "log in", log_in_path %></u> in order to join the event.
+    </div>
   <% end %>
   <% current_user_in_event = !@event.participants.find_by_user_id(current_user).nil? %>
   <% if !session[:user_id].nil? and User.find_by_id(session[:user_id]).rank > 0 and !@event.finished? and !@event.full %>
