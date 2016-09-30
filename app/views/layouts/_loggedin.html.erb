@@ -8,4 +8,6 @@
 <%= link_to edit_user_path(session[:user_id]), class: 'dropdown-item' do %>
   <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
 <% end %>
-<%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'dropdown-item', name: 'navbar_logout' %>
+<%= link_to url_for({action: :destroy, controller: :sessions}), method: 'delete', remote: true, class: 'dropdown-item', name: 'navbar_logout' do %>
+  <i class="fa fa-sign-out" aria-hidden="true"></i> Log Out
+<% end %>

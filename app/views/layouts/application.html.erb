@@ -40,7 +40,8 @@
         <div class="btn-group pull-xs-right">
           <div class='hidden-xs-down'>
             <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= (logged_in && User.find(session[:user_id]).email) || 'Log In' %>
+              <%= (logged_in && User.find(session[:user_id]).name) || "<i class=\"fa fa-sign-in\" aria-hidden=\"true\"></i>
+ Log In".html_safe %>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
               <% if logged_in then %>
@@ -61,7 +62,9 @@
               <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
             <% end %>
             <li class='nav-item'>
-              <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', name: 'navbar_logout' %>
+              <%= link_to url_for({action: :destroy, controller: :sessions}), method: 'delete', remote: true, class: 'nav-link', name: 'navbar_logout' do %>
+                <i class="fa fa-sign-out" aria-hidden="true"></i> Log Out
+              <% end %>
             </li>
           <% else %>
             <li class='nav-item'>
