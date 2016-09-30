@@ -14,7 +14,7 @@
 <body>
   <nav class="navbar navbar-dark bg-faded nav-margin-bottom" style="background-color: #0a442e;">
     <button class="navbar-toggler hidden-sm-up pull-xs-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar">&#9776;</button>
-    <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
+    <div class="collapse navbar-toggleable-xs main-div" id="collapsingNavbar">
       <a class="navbar-brand hidden-sm-down" href="/">Lakewood Leaders</a>
       <ul class="nav navbar-nav">
         <div class='hidden-sm-up'>
@@ -40,7 +40,7 @@
         <div class="btn-group pull-xs-right">
           <div class='hidden-xs-down'>
             <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= (logged_in && User.find(session[:user_id]).email) || 'Guest' %>
+              <%= (logged_in && User.find(session[:user_id]).email) || 'Log In' %>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
               <% if logged_in then %>

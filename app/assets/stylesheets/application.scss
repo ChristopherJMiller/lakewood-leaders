@@ -57,8 +57,18 @@ div.main-div {
   margin-right: 2%;
 }
 
+div.nav-margin {
+  margin-left: 0;
+  margin-right: 0;  
+}
+
 /* Medium devices (desktops, 992px and up) @screen-md-min*/
 @media (min-width: 992px) {
+  div.nav-margin {
+    margin-left: 16.6666667%;
+    margin-right: 16.6666667%;
+  }
+
   div.main-div {
     margin-left: 16.6666667%;
     margin-right: 16.6666667%;
