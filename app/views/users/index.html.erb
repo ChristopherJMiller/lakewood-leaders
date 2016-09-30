@@ -19,7 +19,7 @@
       </thead>
       <% end %>
       <tbody>
-        <%= render partial: 'user', collection: user_fee_collection, as: :user or "<div class=\"alert alert-info\" role=\"alert\">No user have yet to pay their fees.</div>".html_safe%>
+        <%= render partial: 'user', collection: user_fee_collection, as: :user or "<div class=\"alert alert-info\" role=\"alert\">No user have yet to pay their fees.</div>".html_safe %>
       </tbody>
     </table>
   <% end %>
