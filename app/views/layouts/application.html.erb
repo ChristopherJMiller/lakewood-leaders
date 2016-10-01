@@ -37,8 +37,11 @@
             <i class="fa fa-users" aria-hidden="true"></i> Members
           <% end %>
         </li>
-        <div class="btn-group pull-xs-right">
-          <div class='hidden-xs-down'>
+        <div class="pull-xs-right">
+          <%= link_to admin_dashboard_path, class: 'btn btn-outline-secondary hidden-xs-down' do %>
+            <i class='fa fa-tachometer' aria-hidden='true'></i> Site Dashboard
+          <% end %>
+          <div class='btn-group hidden-xs-down'>
             <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= (logged_in && User.find(session[:user_id]).email) || 'Guest' %>
             </a>
