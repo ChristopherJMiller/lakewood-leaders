@@ -50,6 +50,7 @@ GEM
     byebug (9.0.5)
     chart-js-rails (0.1.0)
       railties (> 3.1)
+    chartkick (2.0.2)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -206,6 +207,7 @@ DEPENDENCIES
   bootstrap
   byebug
   chart-js-rails
+  chartkick
   coffee-rails (~> 4.1.0)
   daemons
   database_cleaner

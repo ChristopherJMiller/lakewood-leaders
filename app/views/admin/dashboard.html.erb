@@ -4,5 +4,75 @@
       <h1 class="display-3">Dashboard</h1>
     </div>
   </div>
-  
+  <ul class="nav nav-pills nav-justified">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Users</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Events</a>
+    </li>
+  </ul>
+  <div class="card-deck-wrapper">
+    <div class="card-deck">
+      <div class="card text-xs-center">
+        <div class="card-header">
+          Total User Count
+        </div>
+        <div class="card-block">
+          <h1 class="card-title display-1"><%= User.count %></h1>
+        </div>
+      </div>
+      <div class="card text-xs-center">
+        <div class="card-header">
+          Paid vs. Not-Paid Members
+        </div>
+        <div class="card-block">
+          <h2 class="card-title"><%= pie_chart({"Paid Users": User.where("rank > ?", 0).count, "Not Paid Users": User.where(rank: 0).count}) %></h2>
+        </div>
+      </div>
+      <div class="card text-xs-center">
+        <div class="card-header">
+          Paid vs. Not-Paid Members
+        </div>
+        <div class="card-block">
+          <h2 class="card-title"><%= pie_chart({"Verfied Users": User.where(verified: true).count, "Unverified Users": User.where(verified: false).count}) %></h2>
+        </div>
+      </div>
+    </div>
+    <div class="card-deck">
+      <div class="card text-xs-center">
+        <div class="card-header">
+          Event Count
+        </div>
+        <div class="card-block">
+          <h1 class="card-title display-3">Active: <%= Event.where(finished: false).count %><br>
+          <small>Finished: <%= Event.where(finished: true).count %></small></h1>
+        </div>
+      </div>
+      <div class="card text-xs-center">
+        <div class="card-header">
+          Total Participants in Events
+        </div>
+        <div class="card-block">
+          <h1 class="card-title display-1"><%= Participant.count %></h1>
+        </div>
+      </div>
+    </div>
+    <h2>Top 10 most active users</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Number of times participanted in events</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
 </div>

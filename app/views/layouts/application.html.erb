@@ -38,8 +38,10 @@
           <% end %>
         </li>
         <div class="pull-xs-right">
-          <%= link_to admin_dashboard_path, class: 'btn btn-outline-secondary hidden-xs-down' do %>
-            <i class='fa fa-tachometer' aria-hidden='true'></i> Site Dashboard
+          <% if logged_in && current_user.is_admin then %>
+            <%= link_to admin_dashboard_path, class: 'btn btn-outline-secondary hidden-xs-down' do %>
+              <i class='fa fa-tachometer' aria-hidden='true'></i> Site Dashboard
+            <% end %>
           <% end %>
           <div class='btn-group hidden-xs-down'>
             <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
