@@ -16,6 +16,12 @@ Rails.application.routes.draw do
   resource :sessions, only: [:create, :destroy]
   resource :tokens, only: [:create]
 
+  namespace :admin do
+    get 'dashboard'
+    get 'users'
+    get 'events'
+  end
+
   resources :announcements
 
   get 'log_in', to: 'sessions#new'
