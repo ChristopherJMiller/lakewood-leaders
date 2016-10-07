@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= render @messages or 'Your inbox is currently empty.' %>
+    <%= render @messages or "<div class=\"alert alert-info\" role=\"alert\">Inbox is Empty</div>".html_safe %>
   </tbody>
 </table>
 </div>

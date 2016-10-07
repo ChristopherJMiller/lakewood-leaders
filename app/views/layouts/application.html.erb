@@ -14,7 +14,7 @@
 <body>
   <nav class="navbar navbar-dark bg-faded nav-margin-bottom" style="background-color: #0a442e;">
     <button class="navbar-toggler hidden-sm-up pull-xs-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar">&#9776;</button>
-    <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
+    <div class="collapse navbar-toggleable-xs main-div" id="collapsingNavbar">
       <a class="navbar-brand hidden-sm-down" href="/">Lakewood Leaders</a>
       <ul class="nav navbar-nav">
         <div class='hidden-sm-up'>
@@ -37,10 +37,16 @@
             <i class="fa fa-users" aria-hidden="true"></i> Members
           <% end %>
         </li>
-        <div class="btn-group pull-xs-right">
-          <div class='hidden-xs-down'>
+        <div class="pull-xs-right">
+          <% if logged_in && current_user.is_admin then %>
+            <%= link_to admin_dashboard_path, class: 'btn btn-outline-secondary hidden-xs-down' do %>
+              <i class='fa fa-tachometer' aria-hidden='true'></i> Site Dashboard
+            <% end %>
+          <% end %>
+          <div class='btn-group hidden-xs-down'>
             <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= (logged_in && User.find(session[:user_id]).email) || 'Guest' %>
+              <%= (logged_in && User.find(session[:user_id]).name) || "<i class=\"fa fa-sign-in\" aria-hidden=\"true\"></i>
+ Log In".html_safe %>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
               <% if logged_in then %>
@@ -61,7 +67,9 @@
               <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
             <% end %>
             <li class='nav-item'>
-              <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', name: 'navbar_logout' %>
+              <%= link_to url_for({action: :destroy, controller: :sessions}), method: 'delete', remote: true, class: 'nav-link', name: 'navbar_logout' do %>
+                <i class="fa fa-sign-out" aria-hidden="true"></i> Log Out
+              <% end %>
             </li>
           <% else %>
             <li class='nav-item'>

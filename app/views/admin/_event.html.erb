@@ -1,0 +1,12 @@
+<tr>
+  <th scope="row"><%= event.id %></th>
+  <td><%= event.name %></td>
+  <td><%= simple_format truncate(event.description, length: 50) %></td>
+  <td><%= event.location %></td>
+  <td><%= format_time event.start_time %></td>
+  <td><%= format_time event.end_time %></td>
+  <td><%= event.max_participants %></td>
+  <td><%= event.participants.count %></td>
+  <td><%= human_boolean event.finished %></td>
+  <td><%= format_time event.created_at %></td>
+</tr>
