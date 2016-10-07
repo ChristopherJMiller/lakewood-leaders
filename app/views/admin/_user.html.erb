@@ -1,5 +1,10 @@
-<th scope="row">1</th>
-  <td>Mark</td>
-  <td>Otto</td>
-  <td>@mdo</td>
+<tr>
+  <th scope="row"><%= user.id %></th>
+  <td><%= user.name %></td>
+  <td><%= user.email %></td>
+  <td><%= human_boolean user.verified %></td>
+  <td><%= user.parent_email or "Not Defined" %></td>
+  <td><%= human_boolean user.parent_verified %></td>
+  <td><%= rank_title user.rank %></td>
+  <td><%= format_time user.created_at %></td>
 </tr>
