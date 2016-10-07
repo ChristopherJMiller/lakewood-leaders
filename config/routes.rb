@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'dashboard'
+    get 'users'
+    get 'events'
   end
 
   resources :announcements

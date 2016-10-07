@@ -6,13 +6,13 @@
   </div>
   <ul class="nav nav-pills nav-justified">
     <li class="nav-item">
-      <a class="nav-link active" href="#">Dashboard</a>
+      <%= link_to 'Dashboard', admin_dashboard_path, class: 'nav-link active' %>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Users</a>
+      <%= link_to 'Users', admin_users_path, class: 'nav-link' %>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Events</a>
+      <%= link_to 'Events', admin_events_path, class: 'nav-link' %>
     </li>
   </ul>
   <div class="card-deck-wrapper">
@@ -35,7 +35,7 @@
       </div>
       <div class="card text-xs-center">
         <div class="card-header">
-          Paid vs. Not-Paid Members
+          Verified vs. Unverified Members
         </div>
         <div class="card-block">
           <h2 class="card-title"><%= pie_chart({"Verfied Users": User.where(verified: true).count, "Unverified Users": User.where(verified: false).count}) %></h2>
@@ -67,11 +67,21 @@
         <tr>
           <th>User ID</th>
           <th>Name</th>
+          <th>Rank</th>
           <th>Number of times participanted in events</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-
+        <% Participant.joins(:user).group(:user).order('count_all DESC').limit(10).count.each do |user| %>
+          <tr>
+            <td class='user_id'><%= user[0].id %></td>
+            <td class='user_name'><%= user[0].name %></td>
+            <td class='user_number'><%= rank_title user[0].rank %></td>
+            <td class='user_count'><%= user[1] %></td>
+            <td class='user_view'><%= link_to 'View', user_path(user[0].id), class: 'btn btn-primary' %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
