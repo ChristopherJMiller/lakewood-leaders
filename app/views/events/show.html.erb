@@ -13,7 +13,7 @@
       <%= button_to ((current_user_in_event && 'Signed Up') or 'Sign Up For Event'), {event_id: @event.id, participant: {user_id: current_user.id}, controller: :participants, action: :create}, disabled: current_user_in_event, remote: true, method: :post, class: 'btn btn-primary pull-xs-right', id: 'request_join' %>
   <% end %>
   <% else if current_user_in_event and !@event.finished? %>
-    <%= button_to 'Leave Event', {event_id: @event.id, id: Participant.find_by_user_id(current_user).id, controller: :participants, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger pull-xs-right' %>
+    <%= button_to 'Leave Event', {event_id: @event.id, id: Participant.find_by_event_id_and_user_id(@event.id, current_user).id, controller: :participants, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger pull-xs-right' %>
   <% end %>
   <h1><%= @event.name %></h1>
   <% if @event.finished? %>
