@@ -66,8 +66,6 @@ group :development, :test do
 
   # Call anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  # Access an IRB console
-  gem 'web-console', '~> 2.0'
   # Replace rails default error pages
   gem 'better_errors', '~> 2.1.1'
   # Advanced features of better errors
@@ -85,6 +83,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   # Use FFaker for random value generation
   gem 'ffaker'
+  # Use for Rspec tests
+  gem 'database_cleaner'
 
   ## Refactoring
 
@@ -101,13 +101,17 @@ group :development, :test do
   gem 'bundler-audit', '~> 0.5.0', require: false
   # Scan the application for vulnerabilities
   gem 'brakeman', '~> 3.4.0', require: false
+end
 
+group :development do
   ## Utility
 
   # Watches the filesystem for changes
   gem 'listen', '~> 3.1.5'
-  # Keep the application loaded in the background
-  gem 'spring', '~> 2.0.0'
   # Update spring using listen
   gem 'spring-watcher-listen', '~> 2.0.1'
+  # Access an IRB console
+  gem 'web-console', '~> 2.0'
+  # Keep the application loaded in the background
+  gem 'spring', '~> 2.0.0'
 end
