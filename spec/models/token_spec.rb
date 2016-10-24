@@ -5,18 +5,18 @@ RSpec.describe Token, type: :model do
     FactoryGirl.create(:user)
   end
 
-  it 'should be valid with valid information' do
+  it 'is valid with valid information' do
     token = Token.new(token: '1234', user_id: user.id)
     expect(token).to be_valid
   end
 
-  it 'should not be valid without a valid user' do
+  it 'is not valid without a valid user' do
     token = Token.new(token: '1234', user_id: nil)
-    expect(token).to_not be_valid
+    expect(token).not_to be_valid
   end
 
-  it 'should not be valid without a valid token' do
+  it 'is not valid without a valid token' do
     token = Token.new(token: nil, user_id: user.id)
-    expect(token).to_not be_valid
+    expect(token).not_to be_valid
   end
 end
