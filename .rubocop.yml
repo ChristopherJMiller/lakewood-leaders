@@ -9,6 +9,9 @@ AllCops:
 Rails:
   Enabled: true
 
+Rails/HttpPositionalArguments:
+  Enabled: false
+
 Metrics:
   Enabled: false
 
