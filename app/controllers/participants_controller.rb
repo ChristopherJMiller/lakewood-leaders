@@ -1,21 +1,17 @@
+# = Participant Controller
+# Allows users to join events
 class ParticipantsController < ApplicationController
   respond_to :html, :json
 
   def index
-    @participants = Event.find_by_id(params[:event_id]).participants.all
+    @participants = Event.find_by(id: params[:event_id]).participants.all
     respond_with @participants
   end
 
   def create
-    if session[:user_id].nil? or params[:participant][:user_id] != session[:user_id].to_s
-      head status: :forbidden and return
-    end
-    if !User.find_by_id(session[:user_id]).is_member
-      head status: :forbidden and return
-    end
-    if Participant.find_by_event_id_and_user_id(params[:event_id], params[:participant][:user_id])
-      head status: :conflict and return
-    end
+    return head status: :forbidden if session[:user_id].nil? || params[:participant][:user_id] != session[:user_id].to_s
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).is_member
+    return head status: :conflict if Participant.find_by(event_id: params[:event_id], user_id: params[:participant][:user_id])
     participant = Participant.new(participant_parameters_create)
     if participant.save
       head status: :created, location: event_participant_path(participant.event, participant)
@@ -25,12 +21,10 @@ class ParticipantsController < ApplicationController
   end
 
   def destroy
-    participant = Participant.find_by_event_id_and_id(params[:event_id], params[:id])
-    if !participant
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or (Participant.find_by_event_id_and_user_id(params[:event_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin) or (!User.find_by_id(session[:user_id]).is_admin and !Participant.find_by_event_id_and_user_id(params[:event_id], session[:user_id]).user.is_member)
-      head status: :forbidden and return
+    participant = Participant.find_by(event_id: params[:event_id], id: params[:id])
+    return head status: :not_found unless participant
+    if session[:user_id].nil? || (Participant.find_by(event_id: params[:event_id], user_id: session[:user_id]).nil? && !User.find_by(id: session[:user_id]).is_admin) || (!User.find_by(id: session[:user_id]).is_admin && !Participant.find_by(event_id: params[:event_id], user_id: session[:user_id]).user.is_member)
+      return head status: :forbidden
     end
     participant.destroy
     head status: :ok
@@ -41,6 +35,6 @@ class ParticipantsController < ApplicationController
   def participant_parameters_create
     parameters = params.require(:participant).permit(:user_id)
     parameters[:event_id] = params[:event_id]
-    return parameters
+    parameters
   end
 end

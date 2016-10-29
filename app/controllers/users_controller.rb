@@ -1,3 +1,4 @@
+# = User Controller
 class UsersController < ApplicationController
   respond_to :html, :json
 
@@ -7,10 +8,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by_id(params[:id])
-    if !@user
-      head status: :not_found and return
-    end
+    @user = User.find_by(id: params[:id])
+    return head status: :not_found unless @user
     respond_with @user
   end
 
@@ -20,13 +19,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find_by_id(params[:id])
+    @user = User.find_by(id: params[:id])
     if @user
-      if @user.id != session[:user_id]
-        head status: :forbidden and return
-      else
-        respond_with @user
-      end
+      return head status: :forbidden unless @user.id == session[:user_id]
+      respond_with @user
     else
       respond_to do |format|
         format.html { not_found }
@@ -40,9 +36,7 @@ class UsersController < ApplicationController
 
     if verify_recaptcha(model: user) && user.save
       Notifier.verify_email(user).deliver_now
-      if !user.parent_email.blank?
-        Notifier.verify_parent_email(user).deliver_now
-      end
+      Notifier.verify_parent_email(user).deliver_now unless user.parent_email.blank?
       head status: :created
     else
       render json: {error: user.errors}, status: :bad_request
@@ -50,12 +44,10 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find_by_id(params[:id])
-    if !user
-      head status: :not_found and return
-    end
-    if (session[:user_id].nil? or user.id != session[:user_id]) and (User.find_by_id(session[:user_id]).nil? or User.find_by_id(session[:user_id]).rank < 2)
-      head status: :forbidden and return
+    user = User.find_by(id: params[:id])
+    return head status: :not_found unless user
+    if (session[:user_id].nil? || user.id != session[:user_id]) && (User.find_by(id: session[:user_id]).nil? || User.find_by(id: session[:user_id]).rank < 2)
+      return head status: :forbidden
     end
     if user.update(user_parameters_update)
       head status: :ok
@@ -65,13 +57,9 @@ class UsersController < ApplicationController
   end
 
   def change_password
-    user = User.find_by_id(params[:user_id])
-    if !user
-      head status: :not_found and return
-    end
-    if user.id != session[:user_id] or session[:user_id].nil?
-      head status: :forbidden and return
-    end
+    user = User.find_by(id: params[:user_id])
+    return head status: :not_found unless user
+    return head status: :forbidden if user.id != session[:user_id] || session[:user_id].nil?
     if user.update(user_parameters_change_password)
       head status: :ok
     else
@@ -80,7 +68,7 @@ class UsersController < ApplicationController
   end
 
   def verify_email
-    user = User.find_by_verify_token(params[:token])
+    user = User.find_by(verify_token: params[:token])
     if user
       user.update_attribute(:verified, true)
       respond_to :html
@@ -90,7 +78,7 @@ class UsersController < ApplicationController
   end
 
   def verify_parent_email
-    user = User.find_by_parent_verify_token(params[:token])
+    user = User.find_by(parent_verify_token: params[:token])
     if user
       user.update_attribute(:parent_verified, true)
       respond_to :html
@@ -111,7 +99,7 @@ class UsersController < ApplicationController
     parameters[:parent_verified] = false
     parameters[:verified] = false
     parameters[:rank] = 0
-    return parameters
+    parameters
   end
 
   def user_parameters_update
