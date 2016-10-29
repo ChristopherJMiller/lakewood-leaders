@@ -38,7 +38,7 @@
           <% end %>
         </li>
         <div class="float-xs-right">
-          <% if logged_in && current_user.is_admin then %>
+          <% if logged_in && current_user.admin? then %>
             <%= link_to admin_dashboard_path, class: 'btn btn-outline-secondary hidden-xs-down' do %>
               <i class='fa fa-tachometer' aria-hidden='true'></i> Site Dashboard
             <% end %>

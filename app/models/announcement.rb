@@ -14,8 +14,8 @@ class Announcement < ActiveRecord::Base
   belongs_to :user
 
   validates :title, presence: true
-  validates :title, length: { maximum: 64 }
+  validates :title, length: {maximum: 64}
   validates :post, presence: true
-  validates :post, length: { maximum: 5120 }
+  validates :post, length: {maximum: 5120}
   validates :user, presence: true
 end

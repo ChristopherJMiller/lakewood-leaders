@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   before_action :check_if_admin
 
   def check_if_admin
-    return head status: :forbidden unless !session[:user_id].nil? && User.find_by(id: session[:user_id]).is_admin
+    return head status: :forbidden unless !session[:user_id].nil? && User.find_by(id: session[:user_id]).admin?
   end
 
   def users

@@ -10,7 +10,7 @@ class ParticipantsController < ApplicationController
 
   def create
     return head status: :forbidden if session[:user_id].nil? || params[:participant][:user_id] != session[:user_id].to_s
-    return head status: :forbidden unless User.find_by(id: session[:user_id]).is_member
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).member?
     return head status: :conflict if Participant.find_by(event_id: params[:event_id], user_id: params[:participant][:user_id])
     participant = Participant.new(participant_parameters_create)
     if participant.save
@@ -23,7 +23,7 @@ class ParticipantsController < ApplicationController
   def destroy
     participant = Participant.find_by(event_id: params[:event_id], id: params[:id])
     return head status: :not_found unless participant
-    if session[:user_id].nil? || (Participant.find_by(event_id: params[:event_id], user_id: session[:user_id]).nil? && !User.find_by(id: session[:user_id]).is_admin) || (!User.find_by(id: session[:user_id]).is_admin && !Participant.find_by(event_id: params[:event_id], user_id: session[:user_id]).user.is_member)
+    if session[:user_id].nil? || (Participant.find_by(event_id: params[:event_id], user_id: session[:user_id]).nil? && !User.find_by(id: session[:user_id]).admin?) || (!User.find_by(id: session[:user_id]).admin? && !Participant.find_by(event_id: params[:event_id], user_id: session[:user_id]).user.member?)
       return head status: :forbidden
     end
     participant.destroy
