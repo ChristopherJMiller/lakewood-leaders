@@ -8,6 +8,14 @@
   <% end %>
   <h1>Available Events</h1>
   <table class="table table-striped">
+    <thead>
+      <th>Event Name</th>
+      <th>Slots Available</th>
+      <th>Location</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th></th>
+    </thead>
     <tbody>
       <%= render partial: 'event', collection: Event.where("finished = ?", false), as: :event or 'No avaliable events to join.'%>
     </tbody>
