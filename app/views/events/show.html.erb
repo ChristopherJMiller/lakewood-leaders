@@ -23,7 +23,7 @@
   <h5 class='text-muted'>Time: <%= format_time @event.start_time %> - <%= format_time @event.end_time %></h5>
   <h5 class='text-muted'>Max Participants: <%= @event.max_participants %></h5>
   <% if !@event.full %>
-    <h5 class='text-muted'>Available Slots Left: <%= @event.max_participants - @event.participants.count %></h5>
+    <h5 class='text-muted'>Available Slots Left: <%= @event.slots_left %></h5>
   <% else %>
     <h5 class='text-warning'>This Event is Full</h5>
   <% end %>

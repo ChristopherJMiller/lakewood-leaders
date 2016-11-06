@@ -3,7 +3,7 @@
   <% if event.full then %>
     <td class='event_slots text-danger'>Full</td>
   <% else %>
-    <td class='event_slots'><%= event.max_participants - event.participants.count %></td>
+    <td class='event_slots'><%= event.slots_left %></td>
   <% end %>
   <td class='event_desc'><%= event.location %></td>
   <td class='event_time'><%= format_time event.start_time %> EST</td>

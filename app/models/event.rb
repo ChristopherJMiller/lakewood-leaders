@@ -40,4 +40,8 @@ class Event < ActiveRecord::Base
   def full
     participants.count >= max_participants
   end
+
+  def slots_left
+    max_participants - participants.count
+  end
 end
