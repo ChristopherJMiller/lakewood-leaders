@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :participants, only: [:index, :create, :destroy]
   end
 
+  get '/past', to: 'events#past'
+
   get '/verify_email/:token', to: 'users#verify_email'
   get '/verify_parent_email/:token', to: 'users#verify_parent_email'
 

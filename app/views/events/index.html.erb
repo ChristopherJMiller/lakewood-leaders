@@ -20,10 +20,5 @@
       <%= render partial: 'event', collection: Event.where("finished = ?", false), as: :event or 'No avaliable events to join.'%>
     </tbody>
   </table>
-  <h1>Past Events</h1>
-  <table class="table table-striped">
-    <tbody>
-      <%= render partial: 'event', collection: Event.where("finished = ?", true), as: :event or 'No past events have been found.'%>
-    </tbody>
-  </table>
+  <%= link_to 'View Past Events', past_path, class: 'btn btn-secondary btn-block' %>
 </div>

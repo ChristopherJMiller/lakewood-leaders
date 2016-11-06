@@ -8,6 +8,11 @@ class EventsController < ApplicationController
     respond_with @events
   end
 
+  def past
+    @events = Event.where('finished = ?', true)
+    respond_with @events
+  end
+
   def show
     @event = Event.find_by(id: params[:id])
     if @event

@@ -1,0 +1,16 @@
+<div class="main-div">
+  <h1>Past Events</h1>
+  <table class="table table-striped">
+    <thead>
+      <th>Event Name</th>
+      <th>Slots Available</th>
+      <th>Location</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <%= render @events or 'No past events have been found.'%>
+    </tbody>
+  </table>
+</div>
