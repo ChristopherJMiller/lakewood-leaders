@@ -1,10 +1,11 @@
+# = Application Helper
 module ApplicationHelper
   def logged_in
-    session[:user_id] && User.find_by_id(session[:user_id])
+    session[:user_id] && User.find_by(id: session[:user_id])
   end
 
   def current_user
-    session[:user_id] && User.find_by_id(session[:user_id])
+    session[:user_id] && User.find_by(id: session[:user_id])
   end
 
   def format_time(time)
@@ -12,15 +13,15 @@ module ApplicationHelper
   end
 
   def ranks
-    if User.find_by_id(session[:user_id]).rank == 3
-      ["Non-Member", "Member", "Officer", "Advisor"]
+    if User.find_by(id: session[:user_id]).rank == 3
+      ['Non-Member', 'Member', 'Officer', 'Advisor']
     else
-      ["Non-Member", "Member"]
+      ['Non-Member', 'Member']
     end
   end
 
   def rank_title(rank)
-    titles = ["Non-Member", "Member", "Officer", "Advisor"]
+    titles = ['Non-Member', 'Member', 'Officer', 'Advisor']
     titles[rank]
   end
 end

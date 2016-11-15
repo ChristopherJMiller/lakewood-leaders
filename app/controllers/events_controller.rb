@@ -1,3 +1,5 @@
+# = Events Controller
+# Controller for Admin created events that users can join.
 class EventsController < ApplicationController
   respond_to :html, :json
 
@@ -6,8 +8,13 @@ class EventsController < ApplicationController
     respond_with @events
   end
 
+  def past
+    @events = Event.where('finished = ?', true)
+    respond_with @events
+  end
+
   def show
-    @event = Event.find_by_id(params[:id])
+    @event = Event.find_by(id: params[:id])
     if @event
       respond_with @event
     else
@@ -24,7 +31,7 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find_by_id(params[:id])
+    @event = Event.find_by(id: params[:id])
     if @event
       respond_with @event
     else
@@ -36,12 +43,8 @@ class EventsController < ApplicationController
   end
 
   def create
-    if session[:user_id].nil?
-      head status: :forbidden and return
-    end
-    if !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
-    end
+    return head status: :forbidden if session[:user_id].nil?
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     event = Event.new(event_parameters_create)
     if event.save
       head status: :created, location: event_path(event)
@@ -51,12 +54,10 @@ class EventsController < ApplicationController
   end
 
   def update
-    event = Event.find_by_id(params[:id])
-    if !event
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    event = Event.find_by(id: params[:id])
+    return head status: :not_found unless event
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     if event.update(event_parameters_update)
       head status: :ok
@@ -66,12 +67,10 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    event = Event.find_by_id(params[:id])
-    if !event
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    event = Event.find_by(id: params[:id])
+    return head status: :not_found unless event
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     event.destroy
     head status: :ok
@@ -82,7 +81,7 @@ class EventsController < ApplicationController
   def event_parameters_create
     parameters = params.require(:event).permit(:name, :description, :location, :start_time, :end_time, :max_participants)
     parameters[:finished] = false
-    return parameters
+    parameters
   end
 
   def event_parameters_update

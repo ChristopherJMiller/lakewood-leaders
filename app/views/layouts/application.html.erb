@@ -37,8 +37,8 @@
             <i class="fa fa-users" aria-hidden="true"></i> Members
           <% end %>
         </li>
-        <div class="pull-xs-right">
-          <% if logged_in && current_user.is_admin then %>
+        <div class="float-xs-right">
+          <% if logged_in && current_user.admin? then %>
             <%= link_to admin_dashboard_path, class: 'btn btn-outline-secondary hidden-xs-down' do %>
               <i class='fa fa-tachometer' aria-hidden='true'></i> Site Dashboard
             <% end %>
@@ -57,7 +57,7 @@
             </div>
           </div>
         </div>
-        <div class='hidden-sm-up pull-sm-right'>
+        <div class='hidden-sm-up float-sm-right'>
           <% if logged_in then %>
             <div class='dropdown-divider'></div>
             <%= link_to user_path(session[:user_id]), class: 'nav-item nav-link' do %>

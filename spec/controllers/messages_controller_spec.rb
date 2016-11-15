@@ -45,7 +45,7 @@ RSpec.describe MessagesController, type: :controller do
     context 'as own user' do
       it 'assigns all messages as @messages' do
         message = FactoryGirl.create(:message)
-        get :index, {user_id: message.user.id}, {user_id: message.user.id}
+        get :index, {user_id: message.user.id}, user_id: message.user.id
         expect(assigns(:messages)).to eq([message])
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe MessagesController, type: :controller do
     context 'if logged out' do
       it 'return HTTP Error 403 (Forbidden)' do
         message = FactoryGirl.create(:message)
-        get :index, {user_id: message.user.id}
+        get :index, user_id: message.user.id
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -77,7 +77,7 @@ RSpec.describe MessagesController, type: :controller do
 
     context 'as other user' do
       it 'return HTTP Error 403 (Forbidden)' do
-        get :new, {user_id: user.id}
+        get :new, user_id: user.id
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe MessagesController, type: :controller do
     context 'as own user' do
       it 'assigns all messages as @messages' do
         message_show = FactoryGirl.create(:message)
-        get :show, {user_id: message_show.user.id, id: message_show.id}, {user_id: message_show.user.id}
+        get :show, {user_id: message_show.user.id, id: message_show.id}, user_id: message_show.user.id
         expect(assigns(:message)).to eq(message_show)
       end
     end
@@ -111,7 +111,7 @@ RSpec.describe MessagesController, type: :controller do
     context 'if logged out' do
       it 'return HTTP Error 403 (Forbidden)' do
         message_show = FactoryGirl.create(:message)
-        get :show, {user_id: message_show.user.id, id: message_show.id}
+        get :show, user_id: message_show.user.id, id: message_show.id
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -119,9 +119,9 @@ RSpec.describe MessagesController, type: :controller do
     context 'if message does not exist' do
       it 'return HTTP Error 404 (Not Found)' do
         message = FactoryGirl.create(:message)
-        expect {
+        expect do
           get :show, {user_id: message.user.id, id: -1}, valid_session_admin
-        }.to raise_error(ActionController::RoutingError)
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -136,9 +136,9 @@ RSpec.describe MessagesController, type: :controller do
           end
 
           it 'creates a new message' do
-            expect {
+            expect do
               post :create, {user_id: user.id, message: valid_parameters}, valid_session_admin
-            }.to change(Message, :count).by(1)
+            end.to change(Message, :count).by(1)
           end
         end
 
@@ -160,7 +160,7 @@ RSpec.describe MessagesController, type: :controller do
 
     context 'while logged out' do
       it 'returns HTTP status 403 (Forbidden)' do
-        post :create, {user_id: user.id, message: valid_parameters}
+        post :create, user_id: user.id, message: valid_parameters
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -176,9 +176,9 @@ RSpec.describe MessagesController, type: :controller do
 
         it 'deletes the requested message' do
           message_to_delete = FactoryGirl.create(:message)
-          expect {
+          expect do
             delete :destroy, {user_id: message_to_delete.user.id, id: message_to_delete.id}, valid_session_admin
-          }.to change(Message, :count).by(-1)
+          end.to change(Message, :count).by(-1)
         end
       end
 
@@ -192,15 +192,15 @@ RSpec.describe MessagesController, type: :controller do
           it 'deletes the requested message' do
             new_user = FactoryGirl.create(:user, email: 'delete@test.com')
             message_to_delete = FactoryGirl.create(:message, user: new_user)
-            expect {
-              delete :destroy, {user_id: new_user.id, id: message_to_delete.id}, {user_id: new_user.id}
-            }.to change(Message, :count).by(-1)
+            expect do
+              delete :destroy, {user_id: new_user.id, id: message_to_delete.id}, user_id: new_user.id
+            end.to change(Message, :count).by(-1)
           end
         end
 
         context 'not as the requested message' do
           it 'returns HTTP status 403 (Forbidden)' do
-            delete :destroy, {user_id: message.user.id, id: message.id}, {user_id: different_user.id}
+            delete :destroy, {user_id: message.user.id, id: message.id}, user_id: different_user.id
             expect(response).to have_http_status(:forbidden)
           end
         end

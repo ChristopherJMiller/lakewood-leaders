@@ -22,19 +22,18 @@
 # * Email must be present, must be formatted properly, and must be unique
 # * Verified must be either true or false
 class User < ActiveRecord::Base
-
   before_create :add_token
   before_create :add_parent_token
 
   has_secure_password
   validates :name, presence: true
   validates :email, presence: true
-  validates :email, email_format: { check_mx: true }
+  validates :email, email_format: {check_mx: true}
   validates :email, uniqueness: true
-  validates :password, length: { minimum: 8 }, on: :create
+  validates :password, length: {minimum: 8}, on: :create
   validates :verified, inclusion: [true, false]
 
-  validates :parent_email, email_format: { check_mx: true }, if: "!parent_email.nil?"
+  validates :parent_email, email_format: {check_mx: true}, if: '!parent_email.nil?'
   validates :parent_verified, inclusion: [true, false]
 
   validates :rank, presence: true
@@ -42,31 +41,28 @@ class User < ActiveRecord::Base
   has_many :messages
 
   # Renders a user as json with the password_digest excluded.
-  def as_json(options={})
+  def as_json(options = {})
     options[:except] ||= [:password_digest]
     super(options)
   end
 
   # Returns whether the user has paid their fees and thus if they are offically considered a member.
-  def is_member
+  def member?
     rank > 0
   end
 
   # Returns if the user is an admin or not.
-  def is_admin
+  def admin?
     rank > 1
   end
 
   private
-    def add_token
-      if self.verify_token.blank?
-          self.verify_token = SecureRandom.uuid
-      end
-    end
+
+  def add_token
+    self.verify_token = SecureRandom.uuid if verify_token.blank?
+  end
 
   def add_parent_token
-    if self.parent_verify_token.blank?
-        self.parent_verify_token = SecureRandom.uuid
-    end
+    self.parent_verify_token = SecureRandom.uuid if parent_verify_token.blank?
   end
 end

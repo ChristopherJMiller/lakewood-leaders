@@ -1,3 +1,5 @@
+# = Announcement Controller
+# For admin posted announcements
 class AnnouncementsController < ApplicationController
   respond_to :html, :json
 
@@ -7,7 +9,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def show
-    @announcement = Announcement.find_by_id(params[:id])
+    @announcement = Announcement.find_by(id: params[:id])
     if @announcement
       respond_with @announcement
     else
@@ -24,7 +26,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def edit
-    @announcement = Announcement.find_by_id(params[:id])
+    @announcement = Announcement.find_by(id: params[:id])
     if @announcement
       respond_with @announcement
     else
@@ -36,12 +38,8 @@ class AnnouncementsController < ApplicationController
   end
 
   def create
-    if session[:user_id].nil?
-      head status: :forbidden and return
-    end
-    if !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
-    end
+    return head status: :forbidden if session[:user_id].nil?
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     announcement = Announcement.new(announcement_parameters_create)
     if announcement.save
       Notifier.delay.announce(announcement)
@@ -52,12 +50,10 @@ class AnnouncementsController < ApplicationController
   end
 
   def update
-    announcement = Announcement.find_by_id(params[:id])
-    if !announcement
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    announcement = Announcement.find_by(id: params[:id])
+    return head status: :not_found unless announcement
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     if announcement.update(announcement_parameters_update)
       head status: :ok
@@ -67,12 +63,10 @@ class AnnouncementsController < ApplicationController
   end
 
   def destroy
-    announcement = Announcement.find_by_id(params[:id])
-    if !announcement
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    announcement = Announcement.find_by(id: params[:id])
+    return head status: :not_found unless announcement
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     announcement.destroy
     head status: :ok
@@ -81,13 +75,12 @@ class AnnouncementsController < ApplicationController
   private
 
   def announcement_parameters_update
-    parameters = params.require(:announcement).permit(:title, :post)
+    params.require(:announcement).permit(:title, :post)
   end
 
   def announcement_parameters_create
     parameters = params.require(:announcement).permit(:title, :post)
-    parameters[:user] = User.find_by_id(session[:user_id])
-    return parameters
+    parameters[:user] = User.find_by(id: session[:user_id])
+    parameters
   end
-
 end

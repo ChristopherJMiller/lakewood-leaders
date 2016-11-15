@@ -1,6 +1,6 @@
 <div class="main-div">
   <input type="text" id="user_search" class="form-control" placeholder="Search by Name">
-  <% logged_in_and_admin = logged_in && User.find_by_id(session[:user_id]).is_admin %>
+  <% logged_in_and_admin = logged_in && User.find_by_id(session[:user_id]).admin? %>
   <% if logged_in_and_admin %>
     <h1>Users who have not paid their fees
       <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#guests" aria-expanded="false" aria-controls="collapseExample">
@@ -16,7 +16,7 @@
             <th>Name</th>
             <th>Rank</th>
             <th></th>
-            <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+            <% if logged_in && User.find_by_id(session[:user_id]).admin? %>
               <th></th>
               <th></th>
             <% end %>

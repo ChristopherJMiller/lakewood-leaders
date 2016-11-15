@@ -1,50 +1,37 @@
+# = Messages Controller
+# Allows admins to send messages to users
 class MessagesController < ApplicationController
   respond_to :html, :json
 
   def index
-    if session[:user_id].nil?
-      head status: :forbidden and return
-    end
-    if params[:user_id] == session[:user_id].to_s or User.find_by_id(session[:user_id]).is_admin
-      @messages = User.find_by_id(params[:user_id]).messages.all
-      respond_with @messages
-    else
-      head status: :forbidden and return
-    end
+    return head status: :forbidden if session[:user_id].nil?
+    return head status: :forbidden unless params[:user_id] == session[:user_id].to_s || User.find_by(id: session[:user_id]).admin?
+    @messages = User.find_by(id: params[:user_id]).messages.all
+    respond_with @messages
   end
 
   def new
-    if !session[:user_id].nil? and User.find_by_id(session[:user_id]).is_admin
-      @message = Message.new
-      respond_to :html
-    else
-      head status: :forbidden and return
-    end
+    return head status: :forbidden unless !session[:user_id].nil? && User.find_by(id: session[:user_id]).admin?
+    @message = Message.new
+    respond_to :html
   end
 
   def show
-    if session[:user_id].nil?
-      head status: :forbidden and return
-    end
-    if params[:user_id] == session[:user_id].to_s or User.find_by_id(session[:user_id]).is_admin
-      @message = Message.find_by_user_id_and_id(params[:user_id], params[:id])
-      if @message
-        respond_with @message
-      else
-        respond_to do |format|
-          format.html { not_found }
-          format.json { head status: :not_found }
-        end
-      end
+    return head status: :forbidden if session[:user_id].nil?
+    return head status: :forbidden unless params[:user_id] == session[:user_id].to_s || User.find_by(id: session[:user_id]).admin?
+    @message = Message.find_by(user_id: params[:user_id], id: params[:id])
+    if @message
+      respond_with @message
     else
-      head status: :forbidden and return
+      respond_to do |format|
+        format.html { not_found }
+        format.json { head status: :not_found }
+      end
     end
   end
 
   def create
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
-    end
+    return head status: :forbidden if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
     message = Message.new(message_parameters_create)
     if message.save
       head status: :created, location: user_message_path(params[:user_id], message)
@@ -54,19 +41,12 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    if session[:user_id].nil?
-      head status: :forbidden and return
-    end
-    if params[:user_id] == session[:user_id].to_s or User.find_by_id(session[:user_id]).is_admin
-      message = Message.find_by_id(params[:id])
-      if !message
-        head status: :not_found and return
-      end
-      message.destroy
-      head status: :ok
-    else
-      head status: :forbidden and return
-    end
+    return head status: :forbidden if session[:user_id].nil?
+    return head status: :forbidden unless params[:user_id] == session[:user_id].to_s || User.find_by(id: session[:user_id]).admin?
+    message = Message.find_by(id: params[:id])
+    return head status: :not_found unless message
+    message.destroy
+    head status: :ok
   end
 
   private
@@ -74,6 +54,6 @@ class MessagesController < ApplicationController
   def message_parameters_create
     parameters = params.require(:message).permit(:subject, :body)
     parameters[:user_id] = params[:user_id]
-    return parameters
+    parameters
   end
 end

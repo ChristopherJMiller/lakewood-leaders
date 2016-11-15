@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ParticipantsController, type: :controller do
-
   let(:user) do
     FactoryGirl.create(:user)
   end
@@ -56,7 +55,7 @@ RSpec.describe ParticipantsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns all members of a event to @participants' do
-      get :index, {event_id: participant.event.id}
+      get :index, event_id: participant.event.id
       expect(assigns(:participants)).to eq([participant])
     end
   end
@@ -72,9 +71,9 @@ RSpec.describe ParticipantsController, type: :controller do
             end
 
             it 'creates a new participant' do
-              expect {
+              expect do
                 post :create, {event_id: event.id, participant: valid_parameters_member}, valid_session_member
-              }.to change(Participant, :count).by(1)
+              end.to change(Participant, :count).by(1)
             end
           end
 
@@ -97,7 +96,7 @@ RSpec.describe ParticipantsController, type: :controller do
 
       context 'as a logged out user' do
         it 'returns HTTP status 403 (Forbidden)' do
-          post :create, {event_id: event.id, participant: valid_parameters_member}
+          post :create, event_id: event.id, participant: valid_parameters_member
           expect(response).to have_http_status(:forbidden)
         end
       end
@@ -121,9 +120,9 @@ RSpec.describe ParticipantsController, type: :controller do
 
         it 'deletes the requested member' do
           participant_to_delete = FactoryGirl.create(:participant)
-          expect {
+          expect do
             delete :destroy, {event_id: participant_to_delete.event.id, id: participant_to_delete.id}, valid_session_admin
-          }.to change(Participant, :count).by(-1)
+          end.to change(Participant, :count).by(-1)
         end
       end
 
@@ -136,15 +135,15 @@ RSpec.describe ParticipantsController, type: :controller do
 
           it 'deletes the requested participant' do
             participant_to_delete = FactoryGirl.create(:participant)
-            expect {
-              delete :destroy, {event_id: participant_to_delete.event.id, id: participant_to_delete.id}, {user_id: participant_to_delete.user.id}
-            }.to change(Participant, :count).by(-1)
+            expect do
+              delete :destroy, {event_id: participant_to_delete.event.id, id: participant_to_delete.id}, user_id: participant_to_delete.user.id
+            end.to change(Participant, :count).by(-1)
           end
         end
 
         context 'not as the requested participant' do
           it 'returns HTTP status 403 (Forbidden)' do
-            delete :destroy, {event_id: participant.event.id, id: participant.id}, {user_id: different_user.id}
+            delete :destroy, {event_id: participant.event.id, id: participant.id}, user_id: different_user.id
             expect(response).to have_http_status(:forbidden)
           end
         end

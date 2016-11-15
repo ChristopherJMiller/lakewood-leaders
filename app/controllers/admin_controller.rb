@@ -1,11 +1,11 @@
+# = Admin Controller
+# Manages whether the requested user is an admin or not and deny them or grant them access accordingly.
 class AdminController < ApplicationController
   respond_to :html
-  before_filter :check_if_admin
+  before_action :check_if_admin
 
   def check_if_admin
-    if !(!session[:user_id].nil? && User.find_by_id(session[:user_id]).is_admin)
-      head status: :forbidden and return
-    end
+    return head status: :forbidden unless !session[:user_id].nil? && User.find_by(id: session[:user_id]).admin?
   end
 
   def users

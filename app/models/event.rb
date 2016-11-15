@@ -17,14 +17,13 @@
 # * End time must be present
 # * Finished must be present and be true or false
 class Event < ActiveRecord::Base
-
   validates :name, presence: true
 
   validates :description, presence: true
-  validates :description, length: { maximum: 2048 }
+  validates :description, length: {maximum: 2048}
 
   validates :location, presence: true
-  validates :location, length: { maximum: 256 }
+  validates :location, length: {maximum: 256}
 
   validates :start_time, presence: true
 
@@ -33,12 +32,16 @@ class Event < ActiveRecord::Base
   validates :finished, inclusion: [true, false]
 
   validates :max_participants, presence: true
-  validates :max_participants, numericality: { greater_than: 0 }
+  validates :max_participants, numericality: {greater_than: 0}
 
   has_many :participants
   has_many :users, through: :participants
 
   def full
     participants.count >= max_participants
+  end
+
+  def slots_left
+    max_participants - participants.count
   end
 end

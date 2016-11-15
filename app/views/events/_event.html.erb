@@ -1,5 +1,10 @@
 <tr>
   <td class='event_name'><%= event.name %></td>
+  <% if event.full then %>
+    <td class='event_slots text-danger'>Full</td>
+  <% else %>
+    <td class='event_slots'><%= event.slots_left %></td>
+  <% end %>
   <td class='event_desc'><%= event.location %></td>
   <td class='event_time'><%= format_time event.start_time %> EST</td>
   <td class='event_time'><%= format_time event.end_time %> EST</td>
