@@ -59,6 +59,7 @@ gem 'delayed_job_active_record'
 ## Views
 
 # Use recaptcha for anti spam form protection
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'recaptcha', require: 'recaptcha/rails'
 
 group :development, :test do

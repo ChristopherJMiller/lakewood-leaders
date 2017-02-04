@@ -42,7 +42,6 @@ class AnnouncementsController < ApplicationController
     return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     announcement = Announcement.new(announcement_parameters_create)
     if announcement.save
-      Notifier.delay.announce(announcement)
       head status: :created, location: announcement_path(announcement)
     else
       render json: {error: announcement.errors}, status: :bad_request

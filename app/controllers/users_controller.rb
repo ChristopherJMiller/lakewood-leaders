@@ -35,8 +35,6 @@ class UsersController < ApplicationController
     user = User.new(user_parameters_create)
 
     if verify_recaptcha(model: user) && user.save
-      Notifier.verify_email(user).deliver_now
-      Notifier.verify_parent_email(user).deliver_now unless user.parent_email.blank?
       head status: :created
     else
       render json: {error: user.errors}, status: :bad_request
