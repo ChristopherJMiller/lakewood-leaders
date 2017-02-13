@@ -21,7 +21,7 @@ node('basic') {
   }
 
   stage('Deploy to cluster') {
-    milestone
+    milestone()
     sh "kubectl --namespace default set image deployment lakewoodleaders lakewoodleaders=realmicprojects/lakewoodleaders:${tag}"
   }
 }
