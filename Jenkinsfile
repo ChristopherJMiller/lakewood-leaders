@@ -8,7 +8,7 @@ node('basic') {
   }
 
   stage('Build image') {
-    app = docker.build 'realmicprojects/lakewood-leaders'
+    app = docker.build 'realmicprojects/lakewoodleaders'
   }
 
   stage('Push image') {
@@ -21,6 +21,6 @@ node('basic') {
   }
 
   stage('Deploy to cluster') {
-    sh "kubectl --namespace default set image deployment lakewood-leaders lakewood-leaders=realmicprojects/lakewood-leaders:${tag}"
+    sh "kubectl --namespace default set image deployment lakewoodleaders lakewoodleaders=realmicprojects/lakewoodleaders:${tag}"
   }
 }
