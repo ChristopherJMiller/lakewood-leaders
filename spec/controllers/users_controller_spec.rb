@@ -73,12 +73,6 @@ RSpec.describe UsersController, type: :controller do
           post :create, user: valid_parameters_create
           expect(response).to have_http_status(:created)
         end
-
-        it 'sends an email' do
-          expect do
-            post :create, user: valid_parameters_create
-          end.to change { ActionMailer::Base.deliveries.count }.by(1)
-        end
       end
 
       context 'with a parent email defined' do
@@ -91,12 +85,6 @@ RSpec.describe UsersController, type: :controller do
         it 'returns HTTP status 201 (Created)' do
           post :create, user: valid_parameters_create_with_parent
           expect(response).to have_http_status(:created)
-        end
-
-        it 'sends an email' do
-          expect do
-            post :create, user: valid_parameters_create_with_parent
-          end.to change { ActionMailer::Base.deliveries.count }.by(2)
         end
       end
     end
