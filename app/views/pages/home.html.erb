@@ -21,34 +21,46 @@
   <hr>
   <div class="row officers">
     <div class="offset-md-1 col-md-2 col-sm-12">
-      <h4>Alyssa Morford<br>
+      <h4>Daniel Wilkinson<br>
         <small class="text-muted">President</small>
       </h4>
     </div>
     <div class="col-md-2 col-sm-12">
-      <h4>Molly Mendoza<br>
+      <h4>Joe Maier<br>
         <small class="text-muted">Vice President</small>
       </h4>
     </div>
     <div class="col-md-2 col-sm-12">
-      <h4>Joe Maier<br>
+      <h4>Jenna DiDomenico<br>
         <small class="text-muted">Treasurer</small>
       </h4>
     </div>
     <div class="col-md-2 col-sm-12">
-      <h4>Hannah Reynolds<br>
+      <h4>Emma Price<br>
         <small class="text-muted">Secretary</small>
       </h4>
     </div>
     <div class="col-md-2 col-sm-12">
-      <h4>Daniel Wilkinson<br>
+      <h4>Tayla Rosenthal<br>
         <small class="text-muted">Historian</small>
+      </h4>
+    </div>
+  </div>
+  <div class="row officers">
+    <div class="offset-md-4 col-md-2 col-sm-12">
+      <h4>Chelsea Petruzzi<br>
+        <small class="text-muted">Public Relations</small>
+      </h4>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <h4>Lily Sutton<br>
+        <small class="text-muted">Member Coordinator</small>
       </h4>
     </div>
   </div>
   <h1>Recent Announcements</h1>
   <hr>
-  <div class="card-columns">
+  <div class="card-group">
     <%= render partial: 'announcement', collection: Announcement.last(3).reverse!, as: :announcement or 'No recent announcements.'%>
   </div>
 </div>
