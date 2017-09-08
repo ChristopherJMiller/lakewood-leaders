@@ -1,0 +1,11 @@
+<div class="main-div">
+  <%= month_calendar events: @events, partial: 'simple_calendar/calendar' do |date, events| %>
+    <%= format_date date %>
+
+    <% events.each do |event| %>
+      <div>
+        <%= link_to event.name, event %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

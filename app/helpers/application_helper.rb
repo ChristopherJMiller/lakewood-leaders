@@ -12,6 +12,10 @@ module ApplicationHelper
     time.strftime('%b %d, %Y %I:%M %p')
   end
 
+  def format_date(time)
+    time.strftime('%b %d')
+  end
+
   def ranks
     if User.find_by(id: session[:user_id]).rank == 3
       ['Non-Member', 'Member', 'Officer', 'Advisor']
