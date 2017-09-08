@@ -29,4 +29,5 @@ Rails.application.routes.draw do
   get 'log_in', to: 'sessions#new'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'
+  get 'calendar', to: 'pages#calendar'
 end
