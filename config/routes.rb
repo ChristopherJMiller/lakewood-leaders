@@ -30,4 +30,5 @@ Rails.application.routes.draw do
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'
   get 'calendar', to: 'pages#calendar'
+  get 'become_member', to: 'pages#become_member'
 end
