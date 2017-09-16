@@ -92,6 +92,14 @@
       </ul>
     </div>
   </nav>
+  <% if logged_in && !current_user.member? %>
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Warning!</strong> You are currently not a full member, meaning you cannot sign up for events. To learn about how to become a member, you can find the requirements <%= link_to 'here.', become_member_path %>
+    </div>
+  <% end %>
   <%= yield %>
 </body>
 </html>
