@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 8}, on: :create
   validates :verified, inclusion: [true, false]
 
-  validates :parent_email, email_format: {check_mx: true}, if: '!parent_email.nil?'
+  validates_email_format_of :parent_email, if: '!parent_email.nil?'
   validates :parent_verified, inclusion: [true, false]
 
   validates :rank, presence: true
