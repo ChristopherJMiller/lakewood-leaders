@@ -1,0 +1,26 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Welcome back,<br> <%= current_user.name %></h1>
+  </div>
+</div>
+<div class="main-div">
+  <h3>Recent Site Announcements</h3>
+  <div class="col-md-8 col-sm-12">
+    <%= render partial: 'announcement', collection: Announcement.last(6).reverse!, as: :announcement or 'No recent announcements.'%>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <h3>Your Events</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'event_row', collection: Participant.where(user_id: current_user.id).sort_by { |a| a.event.finished ? 1 : 0 }, as: :participant or 'No Events Found.' %>
+      </tbody>
+    </table>
+  </div>
+</div>
