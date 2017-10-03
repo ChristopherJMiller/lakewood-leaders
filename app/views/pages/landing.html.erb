@@ -1,0 +1,58 @@
+<div style='background: url(<%= asset_path 'cover.jpg' %>) no-repeat center; background-size: cover' class="opening hidden-sm-down">
+  <h1 class="display-1 center"><div style="height: 100%; margin-top: 25%"><small>The leaders of today, <br>who make the difference of tomorrow.</div></small></h1>
+</div>
+<h1 class="hidden-md-up" style="text-align: center">Lakewood Leaders</h1>
+<h3 class="hidden-md-up" style="text-align: center">The leaders of today, <br>who make the difference of tomorrow.</h3>
+<div class="main-div">
+  <h1>About Us</h1>
+  <hr>
+  <p>Lakewood Leaders is an organization that supports team work and leadership through community service
+  events. Providing opportunity to support the community and give back to charity is the main goal of the organization. The members and their participation
+  are the key to making Lakewood Leaders as successful as it is. As a club and as a team, we work hard to inspire others and give back as much as we can.</p>
+  <h1>Our Officers</h1>
+  <hr>
+  <div class="row officers">
+    <div class="offset-md-1 col-md-2 col-sm-12">
+      <h4>Daniel Wilkinson<br>
+        <small class="text-muted">President</small>
+      </h4>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <h4>Joe Maier<br>
+        <small class="text-muted">Vice President</small>
+      </h4>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <h4>Jenna DiDomenico<br>
+        <small class="text-muted">Treasurer</small>
+      </h4>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <h4>Emma Price<br>
+        <small class="text-muted">Secretary</small>
+      </h4>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <h4>Tayla Rosenthal<br>
+        <small class="text-muted">Historian</small>
+      </h4>
+    </div>
+  </div>
+  <div class="row officers">
+    <div class="offset-md-4 col-md-2 col-sm-12">
+      <h4>Chelsea Petruzzi<br>
+        <small class="text-muted">Public Relations</small>
+      </h4>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <h4>Lily Sutton<br>
+        <small class="text-muted">Member Coordinator</small>
+      </h4>
+    </div>
+  </div>
+  <h1>Recent Announcements</h1>
+  <hr>
+  <div class="card-group">
+    <%= render partial: 'announcement', collection: Announcement.last(3).reverse!, as: :announcement or 'No recent announcements.'%>
+  </div>
+</div>

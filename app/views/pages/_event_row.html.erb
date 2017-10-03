@@ -1,0 +1,10 @@
+<% mute_text = participant.event.finished ? 'text-muted' : '' %>
+<tr>
+  <td class='event_name <%= mute_text %>'><%= participant.event.name %></td>
+  <td class='event_time <%= mute_text %>'><%= format_date participant.event.start_time %></td>
+  <% unless participant.event.finished %>
+    <td class='event_view'><%= link_to 'View', event_path(participant.event.id), class: 'btn btn-primary btn-sm' %></td>
+  <% else %>
+    <td class='event_view text-muted'>Finished</td>
+  <% end %>
+</tr>
