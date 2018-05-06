@@ -53,7 +53,7 @@ class UsersController < ApplicationController
       return head status: :forbidden
     end
     # Block changing rank
-    if !user.rank.nil? && User.find_by(id: session[:user_id]).rank < 2
+    if !params[:user][:rank].nil? && User.find_by(id: session[:user_id]).rank < 2
       return head status: :forbidden
     end
     if user.update(user_parameters_update)

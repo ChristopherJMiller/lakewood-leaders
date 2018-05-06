@@ -14,6 +14,10 @@ RSpec.describe UsersController, type: :controller do
   end
 
   let(:valid_parameters_update) do
+    {name: 'John Smith'}
+  end
+
+  let(:valid_parameters_update_as_admin) do
     {name: 'John Smith', rank: 3}
   end
 
@@ -33,12 +37,20 @@ RSpec.describe UsersController, type: :controller do
     FactoryGirl.create(:user)
   end
 
+  let(:admin) do
+    FactoryGirl.create(:user, email: 'admin@gmail.com', rank: 2)
+  end
+
   let(:unverified_user) do
     FactoryGirl.create(:user, email: 'user3@gmail.com', verified: false)
   end
 
   let(:valid_session) do
     {user_id: user.id}
+  end
+
+  let(:valid_session_admin) do
+    {user_id: admin.id}
   end
 
   let(:invalid_session) do
@@ -131,17 +143,32 @@ RSpec.describe UsersController, type: :controller do
   describe 'PUT #update' do
     context 'with a valid user' do
       context 'with valid parameters' do
-        before do
-          put :update, {id: user.id, user: valid_parameters_update}, valid_session
-        end
+        context 'as own user' do
+          before do
+            put :update, {id: user.id, user: valid_parameters_update}, valid_session
+          end
 
-        it 'returns HTTP status 200 (OK)' do
-          expect(response).to have_http_status(:ok)
-        end
+          it 'returns HTTP status 200 (OK)' do
+            expect(response).to have_http_status(:ok)
+          end
 
-        it 'updates the requested user' do
-          user.reload
-          expect(user.name).to eq(valid_parameters_update[:name])
+          it 'updates the requested user' do
+            user.reload
+            expect(user.name).to eq(valid_parameters_update[:name])
+          end
+
+          it 'can\'t update their rank if not an admin' do
+            put :update, {id: user.id, user: valid_parameters_update_as_admin}, valid_session
+            user.reload
+            expect(user.rank).to_not eq(valid_parameters_update_as_admin[:rank])
+          end
+        end
+        context 'as admin' do
+          it 'updates the requested user' do
+            put :update, {id: user.id, user: valid_parameters_update_as_admin}, valid_session_admin
+            user.reload
+            expect(user.name).to eq(valid_parameters_update[:name])
+          end
         end
       end
 
