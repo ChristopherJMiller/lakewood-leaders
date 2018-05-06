@@ -44,7 +44,16 @@ class UsersController < ApplicationController
   def update
     user = User.find_by(id: params[:id])
     return head status: :not_found unless user
-    if (session[:user_id].nil? || user.id != session[:user_id]) && (User.find_by(id: session[:user_id]).nil? || User.find_by(id: session[:user_id]).rank < 2)
+    # Block bad sessions
+    unless (!session[:user_id].nil? && !User.find_by(id: session[:user_id]).nil?)
+      return head status: :forbidden
+    end
+    # Block changing other users
+    if user.id != session[:user_id] && User.find_by(id: session[:user_id]).rank < 2
+      return head status: :forbidden
+    end
+    # Block changing rank
+    if !user.rank.nil? && User.find_by(id: session[:user_id]).rank < 2
       return head status: :forbidden
     end
     if user.update(user_parameters_update)
